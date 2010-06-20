@@ -15,4 +15,10 @@
             </asp:TemplateField>
         </Columns>
     </asp:GridView>
+    <br /><br />
+    <div style="text-align: right">
+        To create a new repository, enter folder name:
+        <asp:TextBox ID="TextBox1" runat="server" Style="margin-left: 0px" Width="280px"></asp:TextBox>&nbsp;<asp:Button
+            ID="Button1" runat="server" OnClick="Button1_Click" Text="Create" />
+    </div>
 </asp:Content>

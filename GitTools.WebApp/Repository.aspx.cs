@@ -33,5 +33,19 @@ namespace GitTools.WebApp
             
             return string.Format("{0}/{1}.git", host, dirInfo.Name);
         }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            var folder = this.TextBox1.Text;
+            if (!string.IsNullOrEmpty(folder))
+            {
+                if (!Directory.Exists(folder))
+                {
+                    var gitBaseDir = ConfigurationManager.AppSettings["GitBaseFolder"];
+                    Git.Run("init --bare " + folder, gitBaseDir);
+                    BindData();
+                }
+            }
+        }
     }
 }
