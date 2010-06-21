@@ -29,9 +29,9 @@ namespace GitTools.WebApp
         protected string GetUrl(object dataItem)
         {
             var dirInfo = dataItem as DirectoryInfo;
-            var host = Request.Url.ToString().Replace(Request.Url.LocalPath, "");
+            var host = Request.Url.ToString().Replace("Repository.aspx", "");
             
-            return string.Format("{0}/{1}.git", host, dirInfo.Name);
+            return string.Format("{0}{1}.git", host, dirInfo.Name);
         }
 
         protected void Button1_Click(object sender, EventArgs e)

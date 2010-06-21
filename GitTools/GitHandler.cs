@@ -76,7 +76,8 @@ namespace GitTools
         public string GetGitDir(string rawUrl)
         {
             var match = Regex.Match(rawUrl, "/(.[^\\.]+).git");
-            return match.Success ? match.Groups[1].Value : null;
+            var path = match.Success ? match.Groups[1].Value : "";
+            return Path.GetFileNameWithoutExtension(path);
         }
 
         private bool HasAccess()
@@ -86,7 +87,7 @@ namespace GitTools
 
         /// <summary>
         /// "transfer-encoding:chunked is not supported. 
-        /// Workaround: Set 'git config --set --global http.postBuffer 10485760'
+        /// Workaround: Set 'git config --add --global http.postBuffer 10485760'
         /// </summary>
         /// <param name="serviceName"></param>
         private void ServiceRpc(string serviceName)
