@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
+using System.Web.Routing;
+using System.ServiceModel.Activation;
+using GitTools.WebApp.Services;
 
 namespace GitTools.WebApp
 {
@@ -12,8 +15,11 @@ namespace GitTools.WebApp
 
         void Application_Start(object sender, EventArgs e)
         {
-            // Code that runs on application startup
-
+            RouteTable.Routes.Add(
+                new ServiceRoute(
+                    "odata", 
+                    new WebServiceHostFactory(), 
+                    typeof(GitDataService)));
         }
 
         void Application_End(object sender, EventArgs e)
