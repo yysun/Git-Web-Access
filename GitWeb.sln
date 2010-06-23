@@ -10,7 +10,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8145DF67-0238-48C1-860A-4B58873E2166}"
 	ProjectSection(SolutionItems) = preProject
 		GitWeb.vsmdi = GitWeb.vsmdi
+		License.txt = License.txt
 		Local.testsettings = Local.testsettings
+		README.md = README.md
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
 EndProject
