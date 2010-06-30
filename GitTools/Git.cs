@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using System.Configuration;
+using System.IO;
 
 namespace GitTools
 {
@@ -33,6 +34,30 @@ namespace GitTools
                     throw new Exception(error);
 
                 return output;
+            }
+        }
+
+
+        public static void RunCmd(string args, string workingDirectory)
+        {
+            var gitExePath = ConfigurationManager.AppSettings["GitExePath"];
+
+            var pinfo = new ProcessStartInfo("cmd.exe")
+            {
+                Arguments = "/C \"\"" + gitExePath + "\"\" " + args,
+                CreateNoWindow = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                WorkingDirectory = workingDirectory,
+            };
+
+            using (var process = Process.Start(pinfo))
+            {
+                string error = process.StandardError.ReadToEnd();
+                process.WaitForExit();
+
+                if (!string.IsNullOrEmpty(error))
+                    throw new Exception(error);
             }
         }
     }

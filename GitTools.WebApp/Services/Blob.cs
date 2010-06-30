@@ -12,16 +12,6 @@ namespace GitTools.WebApp.Services
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public string RepoFolder { get; set; }        
-
-        public string Content
-        {
-            get
-            {
-                var output = Git.Run("cat-file -p " + this.Id, this.RepoFolder);
-
-                return output;
-            }
-        }
+        public BlobContent Content { get; set; }
     }
 }

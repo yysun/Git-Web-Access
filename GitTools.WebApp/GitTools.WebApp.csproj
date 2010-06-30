@@ -154,6 +154,7 @@
       <DependentUpon>Security.aspx</DependentUpon>
     </Compile>
     <Compile Include="Services\Blob.cs" />
+    <Compile Include="Services\BlobContent.cs" />
     <Compile Include="Services\Branch.cs" />
     <Compile Include="Services\Commit.cs" />
     <Compile Include="Services\Tree.cs" />

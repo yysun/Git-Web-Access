@@ -32,6 +32,8 @@ namespace GitTools.WebApp.Services
 
         public IQueryable<Blob> Blobs { get { return null; } }
 
+        public IQueryable<BlobContent> BlobContents { get { return null; } }
+
         public IQueryable<Tag> Tags { get { return null; } }
 
     }
