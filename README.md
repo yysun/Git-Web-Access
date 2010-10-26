@@ -14,6 +14,7 @@ Features
 * Create remote repositories
 * Leverage ASP.NET Authentication and Authorization
 * Support IIS 7 integrated pipeline mode
+* Expose Git repository through [OData](http://www.odata.org) protocol
 
 Installation
 ------------
@@ -22,8 +23,13 @@ Installation
 * Create web application and assign a new application pool that runs as Local System
 * Browse the web application and to configure
 
+
 ![Home](http://gitweb.codeplex.com/Project/Download/FileDownload.aspx?DownloadId=128658)
 
-![Repositories](http://gitweb.codeplex.com/Project/Download/FileDownload.aspx?DownloadId=128658)
+![Create Repo](http://gitweb.codeplex.com/Project/Download/FileDownload.aspx?DownloadId=160896)
+
+![Git Push](http://gitweb.codeplex.com/Project/Download/FileDownload.aspx?DownloadId=160897)
+
+![Odata](http://gitweb.codeplex.com/Project/Download/FileDownload.aspx?DownloadId=160898)
 
 

@@ -10,9 +10,13 @@ namespace GitTools
 {
     public abstract class Git
     {
+        private const string TRACE_CATEGORY = "git";
+
         public static string Run(string args, string workingDirectory)
         {
             var gitExePath = ConfigurationManager.AppSettings["GitExePath"];
+
+            Trace.WriteLine(string.Format("{2}>{0} {1}", gitExePath, args, workingDirectory), TRACE_CATEGORY);
 
             var pinfo = new ProcessStartInfo(gitExePath)
             {
@@ -30,9 +34,13 @@ namespace GitTools
                 string error = process.StandardError.ReadToEnd();
                 process.WaitForExit();
 
-                if (!string.IsNullOrEmpty(error))
-                    throw new Exception(error);
+                Trace.WriteLine(output, TRACE_CATEGORY);
 
+                if (!string.IsNullOrEmpty(error))
+                {
+                    Trace.WriteLine("STDERR: " + error, TRACE_CATEGORY);
+                    throw new Exception(error);
+                }
                 return output;
             }
         }
