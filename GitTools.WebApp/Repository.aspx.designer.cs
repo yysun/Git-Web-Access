@@ -13,30 +13,30 @@ namespace GitTools.WebApp {
     public partial class Repository {
         
         /// <summary>
-        /// GridView1 control.
+        /// gwRepos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView1;
+        protected global::System.Web.UI.WebControls.GridView gwRepos;
         
         /// <summary>
-        /// TextBox1 control.
+        /// tbCreateFolderName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.WebControls.TextBox tbCreateFolderName;
         
         /// <summary>
-        /// Button1 control.
+        /// btnCreateFolder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button btnCreateFolder;
     }
 }

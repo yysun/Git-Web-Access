@@ -11,6 +11,7 @@ namespace GitTools
     public abstract class Git
     {
         private const string TRACE_CATEGORY = "git";
+        public const string GIT_EXTENSION = "git";
 
         public static string Run(string args, string workingDirectory)
         {

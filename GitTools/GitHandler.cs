@@ -75,9 +75,9 @@ namespace GitTools
 
         public string GetGitDir(string rawUrl)
         {
-            var match = Regex.Match(rawUrl, "/(.[^\\.]+).git");
+            var match = Regex.Match(rawUrl, "/(.[^\\.]+.git)");
             var path = match.Success ? match.Groups[1].Value : "";
-            return Path.GetFileNameWithoutExtension(path);
+            return Path.GetFileName(path);
         }
 
         private bool HasAccess()

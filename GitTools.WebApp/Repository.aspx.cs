@@ -19,33 +19,37 @@ namespace GitTools.WebApp
         private void BindData()
         {
             var baseFolder = ConfigurationManager.AppSettings["GitBaseFolder"];
-
             var directoryInfo = new DirectoryInfo(baseFolder);
 
-            this.GridView1.DataSource = directoryInfo.EnumerateDirectories();
-            this.GridView1.DataBind();
+            gwRepos.DataSource = directoryInfo.EnumerateDirectories(string.Format("*.{0}", Git.GIT_EXTENSION));
+            gwRepos.DataBind();
         }
 
         protected string GetUrl(object dataItem)
         {
             var dirInfo = dataItem as DirectoryInfo;
             var host = Request.Url.ToString().Replace("Repository.aspx", "");
-            
-            return string.Format("{0}{1}.git", host, dirInfo.Name);
+
+            return string.Format("{0}{1}", host, dirInfo.Name );
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
+        protected void btnCreateFolder_Click(object sender, EventArgs e)
         {
-            var folder = this.TextBox1.Text;
-            if (!string.IsNullOrEmpty(folder))
+            var folder = tbCreateFolderName.Text;
+
+            if (string.IsNullOrEmpty(folder)) return;
+
+            string ext = Path.GetExtension(folder);
+            if (string.IsNullOrEmpty(ext) || ext != Git.GIT_EXTENSION)
             {
-                if (!Directory.Exists(folder))
-                {
-                    var gitBaseDir = ConfigurationManager.AppSettings["GitBaseFolder"];
-                    Git.Run("init --bare " + folder, gitBaseDir);
-                    BindData();
-                }
+                folder = Path.ChangeExtension(folder, Git.GIT_EXTENSION);
             }
+
+            if (Directory.Exists(folder)) return;
+
+            var gitBaseDir = ConfigurationManager.AppSettings["GitBaseFolder"];
+            Git.Run("init --bare " + folder, gitBaseDir);
+            BindData();
         }
     }
 }
