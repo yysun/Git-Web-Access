@@ -41,6 +41,6 @@
             </td>
         </tr>
     </table>
-    <p>Once the above information is saved, you can start to <a href="Repository.aspx">manager your repositories</a>, 
+    <p>Once the above information is saved, you can start to <a href="Repository.aspx">manage your repositories</a>, 
         or <a href="Help.aspx">read help</a>.</p>
 </asp:Content>

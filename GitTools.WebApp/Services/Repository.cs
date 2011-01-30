@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Services.Common;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace GitTools.WebApp.Services
 {
@@ -72,7 +73,8 @@ namespace GitTools.WebApp.Services
         {
             get
             {
-                var logs = Git.Run("log --all --pretty=format:%H`%P`%s`%cr`%cn`%ce`%ci`%T", this.RepoFolder).Split('\n');
+                var output = Git.Run("log --pretty=format:%H`%P`%cr`%cn`%ce`%ci`%T`%s", this.RepoFolder);
+                var logs = output.Split('\n');
                 foreach (string log in logs)
                 {
                     string[] ss = log.Split('`');
@@ -83,19 +85,19 @@ namespace GitTools.WebApp.Services
                     {
                         Id = ss[0],
                         ParentIds = ss[1],
-                        Message = ss[2],
-                        CommitDateRelative = ss[3],
-                        CommitterName = ss[4],
-                        CommitterEmail = ss[5],
-                        CommitDate = DateTime.Parse(ss[6]),
-                        Tree = new Tree 
-                        { 
-                            Id = ss[7], 
+                        CommitDateRelative = ss[2],
+                        CommitterName = ss[3],
+                        CommitterEmail = ss[4],
+                        CommitDate = DateTime.Parse(ss[5]),
+                        Tree = new Tree
+                        {
+                            Id = ss[6],
                             RepoFolder = this.RepoFolder,
                             Name = "",
                         },
+                        Message = ss[7] + (ss.Length <= 8 ? "" : "`" + string.Join("`", ss, 8, ss.Length-8))
                     };
-                }                
+                }
             }
         }
 

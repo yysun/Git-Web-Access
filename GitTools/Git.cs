@@ -69,5 +69,35 @@ namespace GitTools
                     throw new Exception(error);
             }
         }
+
+        public static void Run(string args, string workingDirectory, Action<string> action)
+        {
+            var gitExePath = ConfigurationManager.AppSettings["GitExePath"];
+
+            var pinfo = new ProcessStartInfo(gitExePath)
+            {
+                Arguments = args,
+                CreateNoWindow = true,
+                RedirectStandardError = true,
+                RedirectStandardOutput = true,
+                UseShellExecute = false,
+                WorkingDirectory = workingDirectory,
+            };
+
+            var process = new Process();
+            process.StartInfo = pinfo;
+            process.EnableRaisingEvents = true;
+
+            process.OutputDataReceived += (_, e) => { action(e.Data); };
+            //process.ErrorDataReceived += (_, e) => { throw new Exception(e.Data); };
+
+            process.Start();
+
+            process.BeginErrorReadLine();
+            process.BeginOutputReadLine();
+
+            process.WaitForExit();
+
+        }
     }
 }
