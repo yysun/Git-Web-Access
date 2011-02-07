@@ -47,6 +47,7 @@
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Services" />
     <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Activation" />
     <Reference Include="System.ServiceModel.Web" />
@@ -68,6 +69,8 @@
     <Content Include="Account\ChangePasswordSuccess.aspx" />
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Register.aspx" />
+    <Content Include="Graph.htm" />
+    <Content Include="GraphX.htm" />
     <Content Include="Help.aspx" />
     <Content Include="Repository.aspx" />
     <Content Include="Scripts\jquery-1.5-vsdoc.js" />
@@ -161,6 +164,9 @@
     <Compile Include="Services\BlobContent.cs" />
     <Compile Include="Services\Branch.cs" />
     <Compile Include="Services\Commit.cs" />
+    <Compile Include="Services\GraphLink.cs" />
+    <Compile Include="Services\GraphNode.cs" />
+    <Compile Include="Services\Graph.cs" />
     <Compile Include="Services\Tree.cs" />
     <Compile Include="Services\GitDataService.svc.cs">
       <DependentUpon>GitDataService.svc</DependentUpon>

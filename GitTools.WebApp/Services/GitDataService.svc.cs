@@ -16,6 +16,19 @@ namespace GitTools.WebApp.Services
         {
             config.SetEntitySetAccessRule("*", EntitySetRights.AllRead);
             config.DataServiceBehavior.MaxProtocolVersion = DataServiceProtocolVersion.V2;
+
+            //config.SetServiceOperationAccessRule("GetRepositoryGraph", ServiceOperationRights.AllRead);
         }
+
+        ////[WebGet(UriTemplate = "/{name}")]
+        //[WebGet]
+        //public Graph GetRepositoryGraph(string name)
+        //{
+        //    var repo = (from r in this.CurrentDataSource.Repositories
+        //                where string.Compare(r.Name, name, true) == 0
+        //                select r).FirstOrDefault();
+
+        //    return new Graph(repo);
+        //}
     }
 }

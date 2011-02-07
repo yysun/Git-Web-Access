@@ -24,6 +24,21 @@ namespace GitTools.WebApp.Services
             }
         }
 
+        public IQueryable<Graph> RepositoryGraph
+        {
+            get
+            {
+                var baseFolder = ConfigurationManager.AppSettings["GitBaseFolder"];
+                var directoryInfo = new DirectoryInfo(baseFolder);
+
+                var repos = from dir in directoryInfo.EnumerateDirectories()
+                            where Repository.IsValid(dir.FullName)
+                            select new Graph(Repository.Open(dir.FullName));
+
+                return repos.AsQueryable();
+            }
+        }
+
         public IQueryable<Branch> Branches { get { return null; } }
 
         public IQueryable<Commit> Commits { get { return null; } }
@@ -35,6 +50,10 @@ namespace GitTools.WebApp.Services
         public IQueryable<BlobContent> BlobContents { get { return null; } }
 
         public IQueryable<Tag> Tags { get { return null; } }
+
+        public IQueryable<GraphNode> GraphNodes { get { return null; } }
+
+        public IQueryable<GraphLink> GraphLinks { get { return null; } }
 
     }
 }
