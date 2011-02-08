@@ -5,7 +5,7 @@ using System.Web;
 using System.Configuration;
 using System.IO;
 
-namespace GitTools.WebApp.Services
+namespace GitTools
 {
     public class GitDataSource
     {

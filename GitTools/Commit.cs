@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data.Services.Common;
 
-namespace GitTools.WebApp.Services
+namespace GitTools
 {
     [DataServiceKey("Id")]
     public class Commit

@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace GitTools.WebApp.Services
+namespace GitTools
 {
     [DataServiceKey("Name")]
     public class Repository
@@ -73,7 +73,7 @@ namespace GitTools.WebApp.Services
         {
             get
             {
-                var output = Git.Run("log -n 300 --date-order HEAD --pretty=format:%H`%P`%cr`%cn`%ce`%ci`%T`%s --all --boundary", this.RepoFolder);
+                var output = Git.Run("log -n 100 --date-order HEAD --pretty=format:%H`%P`%cr`%cn`%ce`%ci`%T`%s --all --boundary", this.RepoFolder);
                 var logs = output.Split('\n');
                 foreach (string log in logs)
                 {

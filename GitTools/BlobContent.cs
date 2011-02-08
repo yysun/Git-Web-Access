@@ -6,7 +6,7 @@ using System.Data.Services.Common;
 using System.IO;
 using System.Text;
 
-namespace GitTools.WebApp.Services
+namespace GitTools
 {
     [DataServiceKey("Id")]
     public class BlobContent
