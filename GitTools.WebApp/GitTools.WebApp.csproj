@@ -84,6 +84,8 @@
     <Content Include="Styles\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="ViewCommits.aspx" />
+    <Content Include="ViewRepository.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -179,6 +181,20 @@
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="ViewCommits.aspx.cs">
+      <DependentUpon>ViewCommits.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewCommits.aspx.designer.cs">
+      <DependentUpon>ViewCommits.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewRepository.aspx.cs">
+      <DependentUpon>ViewRepository.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewRepository.aspx.designer.cs">
+      <DependentUpon>ViewRepository.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

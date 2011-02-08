@@ -44,8 +44,10 @@ namespace GitTools.WebApp
             {
                 folder = Path.ChangeExtension(folder, Git.GIT_EXTENSION);
             }
-
+            
+            folder = folder.Replace(" ", "-");
             if (Directory.Exists(folder)) return;
+
 
             var gitBaseDir = ConfigurationManager.AppSettings["GitBaseFolder"];
             Git.Run("init --bare " + folder, gitBaseDir);

@@ -10,7 +10,7 @@
     <p>
         This site provides web access to Git repositories. To start use this site,</p>
     <ol>
-        <li>Please make sure <a href="http://code.google.com/p/msysgit/downloads/list">msysGit</a> is installed and enter the path of git executable 
+        <li>Please make sure <a href="http://code.google.com/p/msysgit/downloads/list">Git for Windows (1.7+)</a> is installed and enter the path of git executable 
             (git.exe)</li>
         <li>Please enter your git repositories' root folder. It is the parent folder of all repositories.</li>
     </ol>
