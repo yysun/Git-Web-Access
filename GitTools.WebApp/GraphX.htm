@@ -37,11 +37,11 @@
                         links = data.d;
                         draw(nodes, links);
                     },
-                    error: function (xhr) { alert(xhr.message); }
+                    error: function (xhr) { alert(xhr.responseText); }
                 });
 
             },
-            error: function (xhr) { alert(xhr.message); }
+            error: function (xhr) { alert(xhr.responseText); }
         });
 
 

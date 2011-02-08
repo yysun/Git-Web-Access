@@ -162,18 +162,17 @@
     </Compile>
     <Compile Include="Services\Blob.cs" />
     <Compile Include="Services\BlobContent.cs" />
-    <Compile Include="Services\Branch.cs" />
     <Compile Include="Services\Commit.cs" />
     <Compile Include="Services\GraphLink.cs" />
     <Compile Include="Services\GraphNode.cs" />
     <Compile Include="Services\Graph.cs" />
+    <Compile Include="Services\Ref.cs" />
     <Compile Include="Services\Tree.cs" />
     <Compile Include="Services\GitDataService.svc.cs">
       <DependentUpon>GitDataService.svc</DependentUpon>
     </Compile>
     <Compile Include="Services\GitDataSource.cs" />
     <Compile Include="Services\Repository.cs" />
-    <Compile Include="Services\Tag.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

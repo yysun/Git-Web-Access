@@ -39,7 +39,7 @@ namespace GitTools.WebApp.Services
             }
         }
 
-        public IQueryable<Branch> Branches { get { return null; } }
+//        public IQueryable<Branch> Branches { get { return null; } }
 
         public IQueryable<Commit> Commits { get { return null; } }
 
@@ -49,7 +49,7 @@ namespace GitTools.WebApp.Services
 
         public IQueryable<BlobContent> BlobContents { get { return null; } }
 
-        public IQueryable<Tag> Tags { get { return null; } }
+        public IQueryable<Ref> Refs { get { return null; } }
 
         public IQueryable<GraphNode> GraphNodes { get { return null; } }
 

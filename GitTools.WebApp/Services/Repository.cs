@@ -47,16 +47,16 @@ namespace GitTools.WebApp.Services
             return true;
         }
         
-        public IEnumerable<Branch> Branches
-        {
-            get
-            {
-                var branches = from b in Git.Run("branch", this.RepoFolder).Split('\n')
-                               where !string.IsNullOrWhiteSpace(b)
-                               select new Branch { Name = b.Substring(2) };
-                return branches;
-            }
-        }
+        //public IEnumerable<Branch> Branches
+        //{
+        //    get
+        //    {
+        //        var branches = from b in Git.Run("branch", this.RepoFolder).Split('\n')
+        //                       where !string.IsNullOrWhiteSpace(b)
+        //                       select new Branch { Name = b.Substring(2) };
+        //        return branches;
+        //    }
+        //}
 
         public string CurrentBranch
         {
@@ -101,14 +101,18 @@ namespace GitTools.WebApp.Services
             }
         }
 
-        public IEnumerable<Tag> Tags
+        public IEnumerable<Ref> Refs
         {
             get
             {
-                var tags = from t in Git.Run("tag", this.RepoFolder).Split('\n')
-                               where !string.IsNullOrWhiteSpace(t)
-                               select new Tag { Name = t };
-                return tags;
+                var refs = from t in Git.Run("show-ref", this.RepoFolder).Split('\n')
+                           where !string.IsNullOrWhiteSpace(t)
+                           select new Ref 
+                           { 
+                               Id = t.Substring(0, 40),
+                               RefName = t.Substring(46)
+                           };
+                return refs;
             }
         }
     }
