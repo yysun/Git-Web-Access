@@ -16,6 +16,28 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "localhost", "http://localhost:1490", "{028463D2-9E6D-4D82-A755-5A4C4F558020}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		ProjectReferences = "{35F04283-AD6A-420F-B6AE-CF3F93D24C08}|GitTools.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/GitTools.WebSite"
+		Debug.AspNetCompiler.PhysicalPath = "GitTools.WebSite\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\GitTools.WebSite\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/GitTools.WebSite"
+		Release.AspNetCompiler.PhysicalPath = "GitTools.WebSite\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\GitTools.WebSite\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "GitTools.WebSite\"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = GitWeb.vsmdi
@@ -37,6 +59,10 @@ Global
 		{4BA27C17-EF35-41DA-9107-1BBE7DCE86D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BA27C17-EF35-41DA-9107-1BBE7DCE86D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BA27C17-EF35-41DA-9107-1BBE7DCE86D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{028463D2-9E6D-4D82-A755-5A4C4F558020}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{028463D2-9E6D-4D82-A755-5A4C4F558020}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{028463D2-9E6D-4D82-A755-5A4C4F558020}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{028463D2-9E6D-4D82-A755-5A4C4F558020}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

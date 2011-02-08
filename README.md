@@ -18,10 +18,19 @@ Features
 
 Installation
 ------------
-* Install [msysGit 1.7.0](http://code.google.com/p/msysgit/downloads/list) or up on server
+* Install [Git for Windows 1.7.0](http://code.google.com/p/msysgit/downloads/list) or up on server
 * Create a folder on server as root folder of all remote repositories
 * Create web application and assign a new application pool that runs as Local System
 * Browse the web application and to configure
+
+
+Configuration
+-------------
+Repo root folder/user name/project.git -> project repository
+Repo root folder/user name/project     -> project home directory
+
+
+
 
 
 ![Home](http://gitweb.codeplex.com/Project/Download/FileDownload.aspx?DownloadId=128658)
@@ -31,5 +40,3 @@ Installation
 ![Git Push](http://gitweb.codeplex.com/Project/Download/FileDownload.aspx?DownloadId=160897)
 
 ![Odata](http://gitweb.codeplex.com/Project/Download/FileDownload.aspx?DownloadId=160898)
-
-

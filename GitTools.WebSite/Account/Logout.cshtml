@@ -1,0 +1,12 @@
+﻿@{
+    // Log out of the current user context
+    WebSecurity.Logout();
+
+    // Redirect back to the homepage or return URL
+    var returnUrl = Request.QueryString["ReturnUrl"];
+    if (returnUrl.IsEmpty()) {
+        Response.Redirect("~/");
+    } else {
+        Context.RedirectLocal(returnUrl);
+    }
+}

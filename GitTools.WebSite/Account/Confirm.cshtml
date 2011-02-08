@@ -1,0 +1,33 @@
+﻿@{
+    // Set the layout page and page title
+    Layout = "~/_SiteLayout.cshtml";
+    Page.Title = "Registration Confirmation Page";
+
+    string message = "";
+    var confirmationToken = Request["confirmationCode"];
+
+    WebSecurity.Logout();
+    if (!confirmationToken.IsEmpty()) {
+        if (WebSecurity.ConfirmAccount(confirmationToken)) {
+            message = "Registration Confirmed! Click on the Login tab to log in to the site.";
+        } else {
+            message = "Could not confirm your registration info";
+        }
+    }
+}
+
+@if (!@message.IsEmpty()) {
+    <p>@message</p>
+} else {
+    <form method="post" action="">
+        <fieldset>
+            <legend>Confirmation Code</legend>
+            <label for="confirmationCode">
+                Please enter the confirmation code sent to you via email and 
+                then click the <em>Confirm</em> button.
+            </label>
+            <input type="text" id="confirmationCode" name="confirmationCode" title="Confirmation code" />
+            <input type="submit" value="Confirm" title="Confirm registration" />
+        </fieldset>
+    </form>
+}

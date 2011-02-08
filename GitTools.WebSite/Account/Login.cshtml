@@ -1,0 +1,101 @@
+﻿@{
+    // Set the layout page and page title
+    Layout = "~/_SiteLayout.cshtml";
+    Page.Title = "Log In";
+
+    // Initialize general page variables
+    var username = "";
+    var password = "";
+    var rememberMe = false;
+
+    // Validation
+    var isValid = true;
+    var usernameErrorMessage = "";
+    var passwordErrorMessage = "";
+
+    // If this is a POST request, validate and process data
+    if (IsPost) {
+        username = Request.Form["username"];
+        password = Request.Form["password"];
+        rememberMe = Request.Form["rememberMe"].AsBool();
+
+        // Validate the user's username
+        if (username.IsEmpty()) {
+            usernameErrorMessage = "You must specify a username.";
+            isValid = false;
+        }
+
+        // Validate the user's password
+        if (password.IsEmpty()) {
+            passwordErrorMessage = "You must specify a password.";
+            isValid = false;
+        }
+
+        // Confirm there are no validation errors
+        if (isValid) {
+            if (WebSecurity.UserExists(username) && WebSecurity.GetPasswordFailuresSinceLastSuccess(username) > 4 && WebSecurity.GetLastPasswordFailureDate(username).AddSeconds(60) > DateTime.UtcNow ) {
+                Response.Redirect("~/account/AccountLockedOut");
+                return;
+            }
+
+            // Attempt to login to the Security object using provided creds
+            if (WebSecurity.Login(username, password, rememberMe)) {
+                var returnUrl = Request.QueryString["ReturnUrl"];
+                if (returnUrl.IsEmpty()){
+                    Response.Redirect("~/");
+                } else {
+                    Context.RedirectLocal(returnUrl);
+                }
+            }
+
+            // If we arrived here, the login failed; convey that to the user
+            isValid = false;
+        }    
+    }
+}
+
+<p>
+   Please enter your username and password below. If you don't have an account,
+   visit the <a href="@Href("~/Account/Register")">registration page</a> and create one.
+</p>
+
+@* If one or more validation errors exist, show an error *@
+@if (!isValid) {
+   <p class="message error">There was a problem with your login and/or errors exist in your form.</p>
+}
+
+<form method="post" action="">
+    <fieldset>
+        <legend>Log In to Your Account</legend>
+        <ol>
+            <li class="username">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" value="@username" title="Username" @if(!usernameErrorMessage.IsEmpty()){<text>class="error-field"</text>} />
+                @* Write any username validation errors to the page *@
+                @if (!usernameErrorMessage.IsEmpty()) {
+                <label for="username" class="validation-error">
+                    @usernameErrorMessage
+                </label>
+                }
+            </li>
+            <li class="password">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" title="Password" @if(!passwordErrorMessage.IsEmpty()){<text>class="error-field"</text>} />
+                @* Write any password validation errors to the page *@
+                @if (!passwordErrorMessage.IsEmpty()) {
+                <label for="password" class="validation-error">
+                    @passwordErrorMessage
+                </label>
+                }
+            </li>
+            <li class="remember-me">
+                <label class="checkbox" for="rememberMe">Remember Me?</label>
+                <input type="checkbox" id="rememberMe" name="rememberMe" value="true" title="Remember Me" @if(rememberMe){<text>checked="checked"</text>} />
+            </li>
+        </ol>
+        <p class="form-actions">
+            <input type="submit" value="login" title="Login"/>
+        </p>
+        <p><a href="@Href("~/Account/ForgotPassword")">Did you forget your password?</a></p>
+    </fieldset>
+</form>

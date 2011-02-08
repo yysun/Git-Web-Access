@@ -18,7 +18,7 @@ namespace GitTools
         /// </summary>
         #region IHttpHandler Members
 
-        private string gitExePath, gitDir, gitBaseDir;
+        private string gitExePath, gitWorkingDir, gitBaseDir;
 
         private HttpContext context;
 
@@ -26,28 +26,23 @@ namespace GitTools
         {
             this.context = context;
 
+            if (!HasAccess()) return;
+
             gitExePath = ConfigurationManager.AppSettings["GitExePath"];
             gitBaseDir = ConfigurationManager.AppSettings["GitBaseFolder"];
-            gitDir = GetGitDir(context.Request.RawUrl);
+            gitWorkingDir = GetGitDir(context.Request.RawUrl);
 
-            if(string.IsNullOrEmpty(gitDir) || 
+            if(string.IsNullOrEmpty(gitWorkingDir) || 
                !File.Exists(gitExePath) ||
-               !Directory.Exists(Path.Combine(gitBaseDir, gitDir)))
+               !Directory.Exists(Path.Combine(gitBaseDir, gitWorkingDir)))
             {
                 context.Response.StatusCode = 400;
                 context.Response.End();
                 return;
             }
 
-            gitDir = Path.Combine(gitBaseDir, gitDir);
+            gitWorkingDir = Path.Combine(gitBaseDir, gitWorkingDir);
 
-            if (!HasAccess())
-            {
-                context.Response.StatusCode = 403;
-                context.Response.End();
-                return;
-            }
-            
             if (context.Request.RawUrl.IndexOf("/info/refs?service=git-receive-pack") >= 0)
             {
                 GetInfoRefs("receive-pack");
@@ -60,7 +55,7 @@ namespace GitTools
                 }
                 finally
                 {
-                    RunGit(@"update-server-info");
+                    Git.Run(@"update-server-info", gitWorkingDir);
                 }
             }
             else if (context.Request.RawUrl.IndexOf("/info/refs?service=git-upload-pack") >= 0)
@@ -82,6 +77,36 @@ namespace GitTools
 
         private bool HasAccess()
         {
+            if (context.Request.RawUrl.IndexOf("git-receive-pack") >= 0)
+            {
+                string authHeader = context.Request.Headers["Authorization"];
+
+                if (string.IsNullOrEmpty(authHeader))
+                {
+                    context.Response.StatusCode = 401;
+                    context.Response.AddHeader("WWW-Authenticate", "Basic");
+                    return false;
+                }
+                else
+                {
+                    try
+                    {
+                        string userNameAndPassword = Encoding.Default.GetString(
+                            Convert.FromBase64String(authHeader.Substring(6)));
+                        string[] parts = userNameAndPassword.Split(':');
+                        var username = parts[0];
+                        var password = parts[1];
+
+                        //verify user, pass, folder
+                        return true;
+
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
+            }
             return true;
         }
 
@@ -107,7 +132,7 @@ namespace GitTools
                 }
             }
 
-            RunGitCmd(string.Format("{0} --stateless-rpc \"{1}\" < \"{2}\" > \"{3}\"", serviceName, gitDir, fin, fout));
+            Git.RunGitCmd(string.Format("{0} --stateless-rpc \"{1}\" < \"{2}\" > \"{3}\"", serviceName, gitWorkingDir, fin, fout));
             context.Response.WriteFile(fout);
             context.Response.End();
             File.Delete(fin);
@@ -120,7 +145,7 @@ namespace GitTools
             context.Response.ContentType = string.Format("application/x-git-{0}-advertisement", serviceName);
             context.Response.Write(GitString("# service=git-" + serviceName));
             context.Response.Write("0000");
-            RunGitCmd(string.Format("{0} --stateless-rpc --advertise-refs \"{1}\" > \"{2}\"", serviceName, gitDir, fout));
+            Git.RunGitCmd(string.Format("{0} --stateless-rpc --advertise-refs \"{1}\" > \"{2}\"", serviceName, gitWorkingDir, fout));
             context.Response.WriteFile(fout);
             context.Response.End();
             File.Delete(fout);
@@ -147,60 +172,6 @@ namespace GitTools
             context.Response.AddHeader("Pragma", "no-cache");
             context.Response.AddHeader("Cache-Control", "no-cache, max-age=0, must-revalidate");
         }
-
-        #region invoke Git
-        internal string RunGit(string args)
-        {
-            var pinfo = new ProcessStartInfo(gitExePath)
-            {
-                Arguments = args,
-                CreateNoWindow = true,
-                RedirectStandardError = true,
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                WorkingDirectory = gitDir,
-            };
-
-            using (var process = Process.Start(pinfo))
-            {
-                string output = process.StandardOutput.ReadToEnd();
-                string error = process.StandardError.ReadToEnd();
-                process.WaitForExit();
-
-                if (!string.IsNullOrEmpty(error))
-                    Error(error);
-
-                return output;
-            }
-        }
-
-        internal void RunGitCmd(string args)
-        {
-            var pinfo = new ProcessStartInfo("cmd.exe")
-            {
-                Arguments = "/C " + Path.GetFileName(gitExePath) + " " + args,
-                CreateNoWindow = true,
-                RedirectStandardError = true,
-                UseShellExecute = false,
-                WorkingDirectory = Path.GetDirectoryName(gitExePath),
-            };
-
-            using (var process = Process.Start(pinfo))
-            {
-                string error = process.StandardError.ReadToEnd();
-                process.WaitForExit();
-
-                if (!string.IsNullOrEmpty(error)) Error(error);
-            }
-        }
-
-        private void Error(string error)
-        {
-            context.Response.StatusDescription = error;
-            context.Response.StatusCode = 500;
-            context.Response.End();
-        }
-        #endregion
 
         #endregion
     }

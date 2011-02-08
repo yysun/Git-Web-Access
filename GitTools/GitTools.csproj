@@ -49,6 +49,7 @@
     <Compile Include="Git.cs" />
     <Compile Include="GitDataSource.cs" />
     <Compile Include="GitHandler.cs" />
+    <Compile Include="GitWebVirtualPathProvider.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="GraphLink.cs" />
     <Compile Include="GraphNode.cs" />
@@ -56,9 +57,6 @@
     <Compile Include="Ref.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="Tree.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

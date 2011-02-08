@@ -1,0 +1,309 @@
+﻿/*----------------------------------------------------------
+The base color for this template is #5c87b2. If you'd like
+to use a different color start by replacing all instances of
+#5c87b2 with your new color.
+----------------------------------------------------------*/
+
+body
+{
+    background-color: #5c87b2;
+    font-size: .85em;
+    font-family: "Trebuchet MS" , Verdana, Helvetica, Sans-Serif;
+    margin: 0;
+    padding: 0;
+    color: #696969;
+}
+
+a:link
+{
+    color: #034af3;
+    text-decoration: underline;
+}
+
+a:visited
+{
+    color: #505abc;
+}
+
+a:hover
+{
+    color: #1d60ff;
+    text-decoration: none;
+}
+
+a:active
+{
+    color: #12eb87;
+}
+
+/* HEADINGS   
+----------------------------------------------------------*/
+h1, h2
+{
+    font-size: 1.5em;
+    color: #666666;
+    font-variant: small-caps;
+    text-transform: none;
+    font-weight: 200;
+    margin-bottom: 0px;
+}
+
+h3
+{
+    font-size: 1.2em;
+}
+
+h4
+{
+    font-size: 1.1em;
+}
+
+h5, h6
+{
+    font-size: 1em;
+}
+
+/* PRIMARY LAYOUT ELEMENTS   
+----------------------------------------------------------*/
+#page
+{
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#header
+{
+    position: relative;
+    margin-bottom: 0;
+    color: #000;
+    padding: 0;
+}
+
+#main
+{
+    padding: 5px 10px;
+    background-color: #fff;
+    border-radius: 4px 0 4px 4px;
+    -webkit-border-radius: 4px 0 4px 4px;
+    -moz-border-radius: 4px 0 4px 4px;
+}
+
+#footer
+{
+    padding: 10px 0;
+    text-align: center;
+    line-height: normal;
+    margin: 0;
+    font-size: .9em;
+}
+
+/* Site Title 
+----------------------------------------------------------*/
+#header .site-title
+{
+    float: left;
+    font-weight: bold;
+    padding: 5px 0;
+    margin: 0;
+    color: #fff;
+    border: none;
+    line-height: 2em;
+    font-size: 22px; /*CSS3 properties*/
+    text-shadow: 1px 1px 2px #111;
+}
+
+/* Login Display  
+----------------------------------------------------------*/
+#login
+{
+    float: right;
+    font-size: 1.1em;
+    display: block;
+    text-align: right;
+    color: #000;
+}
+
+#login li
+{
+    margin: 0;
+    display: inline;
+    list-style: none;
+    padding-left: 5px;
+}
+
+#login a:link, #login a:visited
+{
+    color: #fff;
+    text-decoration: none;
+}
+
+#login a:hover
+{
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* Tab Menu   
+----------------------------------------------------------*/
+ul#menu
+{
+    clear: both;
+    border-bottom: 1px #5c87b2 solid;
+    padding: 0 0 2px;
+    position: relative;
+    margin: 0;
+    text-align: right;
+}
+
+ul#menu li
+{
+    display: inline;
+    list-style: none;
+}
+
+ul#menu li a
+{
+    padding: 10px 20px;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 2.8em;
+    background-color: #e8eef4;
+    color: #034af3; /*CSS3 properties*/
+    border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+}
+
+ul#menu li a:hover
+{
+    background-color: #fff;
+    text-decoration: none;
+}
+
+ul#menu li a:active
+{
+    background-color: #a6e2a6;
+    text-decoration: none;
+}
+
+ul#menu li.selected a
+{
+    background-color: #fff;
+    color: #000;
+}
+
+/* forms   
+----------------------------------------------------------*/
+fieldset
+{
+    margin: 1em 0;
+    padding: 1em;
+    border: 1px solid #CCC;
+}
+
+fieldset legend
+{
+    font-size: 1.1em;
+    font-weight: bold;
+    padding: 2px 4px 8px 4px;
+}
+
+fieldset ol
+{
+    padding: 0;
+    list-style: none;
+}
+
+fieldset ol li
+{
+    padding-bottom: 5px;
+}
+
+fieldset label
+{
+    display: block;
+}
+
+fieldset label.checkbox
+{
+    display: inline;
+}
+
+fieldset input[type="text"], input[type="password"]
+{
+    border: 1px solid #ccc;
+    padding: 2px;
+    font-size: 1.2em;
+    color: #444;
+    width: 300px;
+}
+
+fieldset input[type="submit"]
+{
+    font-size: 1.2em;
+    padding: 5px;
+}
+
+/* Information and errors  
+----------------------------------------------------------*/
+.message
+{
+    clear: both;
+    border: 1px solid;
+    margin: 10px 0px;
+    padding: 15px 15px; /*CSS3 properties*/
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    box-shadow: 2px 2px 5px #888;
+    -webkit-box-shadow: 2px 2px 5px #888;
+    -moz-box-shadow: 2px 2px 5px #888;
+}
+
+.info
+{
+    background: #bde5f8;
+    color: #00529b;
+}
+
+.error
+{
+    background: #ffe4e4;
+    color: #be3e16;
+}
+
+.success
+{
+    background: #dff2bf;
+    color: #4f8a10;
+}
+
+input[type="text"].error-field, input[type="password"].error-field
+{
+    border: solid 1px #be3e16;
+    background-color: #ffe4e4;
+}
+
+.validation-error
+{
+    display: inline;
+    color: #be3e16;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.validation-error:before
+{
+    content: "»";
+}
+
+.branch
+{
+    color: red;
+}
+
+.tag
+{
+    color: green;
+}

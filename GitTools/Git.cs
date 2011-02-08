@@ -49,7 +49,10 @@ namespace GitTools
 
         public static void RunCmd(string args, string workingDirectory)
         {
+
             var gitExePath = ConfigurationManager.AppSettings["GitExePath"];
+
+            Trace.WriteLine(string.Format("{2}>{0} {1}", gitExePath, args, workingDirectory), TRACE_CATEGORY);
 
             var pinfo = new ProcessStartInfo("cmd.exe")
             {
@@ -70,34 +73,60 @@ namespace GitTools
             }
         }
 
-        public static void Run(string args, string workingDirectory, Action<string> action)
+        //public static void Run(string args, string workingDirectory, Action<string> action)
+        //{
+        //    var gitExePath = ConfigurationManager.AppSettings["GitExePath"];
+
+        //    Trace.WriteLine(string.Format("{2}>{0} {1}", gitExePath, args, workingDirectory), TRACE_CATEGORY);
+
+        //    var pinfo = new ProcessStartInfo(gitExePath)
+        //    {
+        //        Arguments = args,
+        //        CreateNoWindow = true,
+        //        RedirectStandardError = true,
+        //        RedirectStandardOutput = true,
+        //        UseShellExecute = false,
+        //        WorkingDirectory = workingDirectory,
+        //    };
+
+        //    var process = new Process();
+        //    process.StartInfo = pinfo;
+        //    process.EnableRaisingEvents = true;
+
+        //    process.OutputDataReceived += (_, e) => { action(e.Data); };
+        //    //process.ErrorDataReceived += (_, e) => { throw new Exception(e.Data); };
+
+        //    process.Start();
+
+        //    process.BeginErrorReadLine();
+        //    process.BeginOutputReadLine();
+
+        //    process.WaitForExit();
+
+        //}
+
+        public static void RunGitCmd(string args)
         {
             var gitExePath = ConfigurationManager.AppSettings["GitExePath"];
 
-            var pinfo = new ProcessStartInfo(gitExePath)
+            Trace.WriteLine(string.Format("{2}>{0} {1}", gitExePath, args, ""), TRACE_CATEGORY);
+
+            var pinfo = new ProcessStartInfo("cmd.exe")
             {
-                Arguments = args,
+                Arguments = "/C " + Path.GetFileName(gitExePath) + " " + args,
                 CreateNoWindow = true,
                 RedirectStandardError = true,
-                RedirectStandardOutput = true,
                 UseShellExecute = false,
-                WorkingDirectory = workingDirectory,
+                WorkingDirectory = Path.GetDirectoryName(gitExePath),
             };
 
-            var process = new Process();
-            process.StartInfo = pinfo;
-            process.EnableRaisingEvents = true;
+            using (var process = Process.Start(pinfo))
+            {
+                string error = process.StandardError.ReadToEnd();
+                process.WaitForExit();
 
-            process.OutputDataReceived += (_, e) => { action(e.Data); };
-            //process.ErrorDataReceived += (_, e) => { throw new Exception(e.Data); };
-
-            process.Start();
-
-            process.BeginErrorReadLine();
-            process.BeginOutputReadLine();
-
-            process.WaitForExit();
-
+                if (!string.IsNullOrEmpty(error)) throw new Exception(error);
+            }
         }
     }
 }

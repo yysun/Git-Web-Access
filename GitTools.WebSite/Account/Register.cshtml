@@ -1,0 +1,156 @@
+﻿@{
+    // Set the layout page and page title
+    Layout = "~/_SiteLayout.cshtml";
+    Page.Title = "Register an Account";
+
+    // Initialize general page variables
+    var email = "";
+    var password = "";
+    var confirmPassword = "";
+
+    // Validation
+    var isValid = true;
+    var emailErrorMessage = "";
+    var passwordErrorMessage = "";
+    var confirmPasswordMessage = "";
+    var accountCreationErrorMessage = "";
+    // var captchaMessage = "";
+
+    // If this is a POST request, validate and process data
+    if (IsPost) {
+        email = Request.Form["email"];
+        password = Request.Form["password"];
+        confirmPassword = Request.Form["confirmPassword"];
+
+        // Validate the user's captcha answer
+        // if (!ReCaptcha.Validate("PRIVATE_KEY")) {
+        //     captchaMessage = "Captcha response was not correct";
+        //     isValid = false;
+        // }
+
+        // Validate the user's email address
+        if (email.IsEmpty()) {
+            emailErrorMessage = "You must specify an email address.";
+            isValid = false;
+        }
+
+        // Validate the user's password and password confirmation
+        if (password.IsEmpty()) {
+            passwordErrorMessage = "The password cannot be blank.";
+            isValid = false;
+        }
+
+        if (password != confirmPassword) {
+            confirmPasswordMessage = "The new password and confirmation password do not match.";
+            isValid = false;
+        }
+
+        // If all information is valid, create a new account
+        if (isValid) { 
+            // Insert a new user into the database
+            var db = Database.Open("StarterSite");
+
+            // Check if user already exists
+            var user = db.QuerySingle("SELECT Email FROM UserProfile WHERE LOWER(Email) = LOWER(@0)", email);
+            if (user == null) {
+                // Insert email into the profile table
+                db.Execute("INSERT INTO UserProfile (Email) VALUES (@0)", email);
+
+                // Create and associate a new entry in the membership database.
+                // If successful, continue processing the request
+                try {
+                    bool requireEmailConfirmation = !WebMail.SmtpServer.IsEmpty();
+                    var token = WebSecurity.CreateAccount(email, password, requireEmailConfirmation);
+                    if (requireEmailConfirmation) {
+                        var hostUrl = Request.Url.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped);
+                        var confirmationUrl = hostUrl + VirtualPathUtility.ToAbsolute("~/Account/Confirm?confirmationCode=" + HttpUtility.UrlEncode(token));
+
+                        WebMail.Send(
+                            to: email,	
+                            subject: "Please confirm your account", 
+                            body: "Your confirmation code is: " + token + ". Visit <a href=\"" + confirmationUrl + "\">" + confirmationUrl + "</a> to activate your account."
+                        ); 
+                    }
+
+                    if (requireEmailConfirmation) {
+                        // Thank the user for registering and let them know an email is on its way
+                        Response.Redirect("~/Account/Thanks");
+                    } else {
+                        // Navigate back to the homepage and exit
+                        WebSecurity.Login(email, password);
+                        Response.Redirect("~/");
+                    }
+                } catch (System.Web.Security.MembershipCreateUserException e) {
+                    isValid = false;
+                    accountCreationErrorMessage = e.ToString();
+                }
+            } else {
+                // User already exists
+                isValid = false;
+                accountCreationErrorMessage = "Email address is already in use.";
+            }
+        }    
+    }
+}
+
+<p>
+   Use the form below to create a new account. 
+</p>
+
+@* If at least one validation error exists, notify the user *@
+@if (!isValid) {
+   <p class="message error">
+    @if (accountCreationErrorMessage.IsEmpty()) {
+        @:Please correct the errors and try again.
+    } else {
+        @accountCreationErrorMessage
+    }
+   </p>
+}
+
+<form method="post" action="">
+    <fieldset>
+        <legend>Sign-up Form</legend>
+        <ol>
+            <li class="email">
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" title="Email address" value="@email" @if(!emailErrorMessage.IsEmpty()){<text>class="error-field"</text>} />
+                @* Write any email validation errors to the page *@
+                @if (!emailErrorMessage.IsEmpty()) {
+                    <label for="email" class="validation-error">@emailErrorMessage</label>
+                }
+            </li>
+            <li class="password">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" title="Password" @if(!passwordErrorMessage.IsEmpty()){<text>class="error-field"</text>} />
+                @* Write any password validation errors to the page *@
+                @if (!passwordErrorMessage.IsEmpty()) {
+                    <label for="password" class="validation-error">@passwordErrorMessage</label>
+                }
+            </li>
+            <li class="confirm-password">
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" title="Confirm password" @if(!confirmPasswordMessage.IsEmpty()){<text>class="error-field"</text>} />
+                @* Write any password validation errors to the page *@
+                @if (!confirmPasswordMessage.IsEmpty()) {
+                    <label for="confirmPassword" class="validation-error">@confirmPasswordMessage</label>
+                }
+            </li>
+            <li class="recaptcha">
+                <div class="message info">
+                    <p>To enable CAPTCHA verification, <a href="http://go.microsoft.com/fwlink/?LinkId=204140">install the ASP.NET Web Helpers Library</a> and uncomment ReCaptcha.GetHtml and replace 'PUBLIC_KEY'
+                    with your public key.  At the top of this page, uncomment ReCaptcha.Validate and
+                    replace 'PRIVATE_KEY' with your private key, and also uncomment the captchaMessage variable.</p>
+                    <p>Register for reCAPTCHA keys at <a href="http://recaptcha.net">reCAPTCHA.net</a>.</p>
+                </div>
+                @*@ReCaptcha.GetHtml("PUBLIC_KEY", theme: "white")
+                @if (!captchaMessage.IsEmpty()) {
+                    <label class="validation-error">@captchaMessage</label>
+                }*@
+            </li>
+        </ol>
+        <p class="form-actions">
+            <input type="submit" value="Register" title="Register" />
+        </p>
+    </fieldset>
+</form>

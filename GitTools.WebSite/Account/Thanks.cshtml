@@ -1,0 +1,19 @@
+﻿@{
+    // Set the layout page and page title
+    Layout = "~/_SiteLayout.cshtml";
+    Page.Title = "Thanks for registering";
+}
+
+@if (!WebSecurity.IsAuthenticated) {
+    <h2>But you&#8217;re not done yet!</h2>
+    <p>
+       An email with instructions on how to activate your account is on its way 
+       to you.
+    </p>
+} else {
+    <h2>You are all set.</h2>
+    <p>
+        It looks like you&#8217;ve already confirmed your account and are 
+        good to go.
+    </p>
+}
