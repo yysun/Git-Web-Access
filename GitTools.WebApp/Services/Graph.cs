@@ -35,7 +35,6 @@ namespace GitTools.WebApp.Services
 
         public Graph(Repository repository)
         {
-            //GenerateGraph(repository);
             this.repository = repository;
             this.Name = repository.Name;
         }
@@ -51,10 +50,19 @@ namespace GitTools.WebApp.Services
             int i = 0;
 
             var commits = repository.Commits.ToList();
+            var refs = repository.Refs.ToArray();
 
             foreach (var commit in commits)
             {
                 var id = commit.Id;
+                var tags = from r in refs
+                           where r.Type == "tags" && r.Id == id
+                           select r.ToString();
+
+                var branches = from r in refs
+                           where r.Type == "heads" && r.Id == id
+                           select r.ToString();
+                
                 var children = from c in commits
                                where c.ParentIds.Contains(id)
                                select c;
@@ -82,7 +90,15 @@ namespace GitTools.WebApp.Services
                 {
                     lanes[lane] = id;
                 }
-                var node = new GraphNode { X = lane, Y = i++, Id = id, Message = commit.Message };
+                
+                var node = new GraphNode 
+                { 
+                    X = lane, Y = i++, Id = id, Message = commit.Message,
+                    CommitterName = commit.CommitterName, CommitDateRelative = commit.CommitDateRelative,
+                    Tags = string.Join(",", tags),
+                    Branches = string.Join(",", branches),
+                };
+
                 nodes.Add(node);
 
                 foreach (var ch in children)

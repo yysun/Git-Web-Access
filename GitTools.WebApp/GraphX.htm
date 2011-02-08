@@ -11,11 +11,11 @@
 <canvas id="canvas" width="120" height="100" style="margin-top:50px"></canvas>
 <ul id="nodeList" style="list-style-type: none; font:16px/24px arial;"></ul>
 <script id="nodeTemplate" type="text/x-jquery-tmpl"> 
-<li>${Id} &nbsp; <a href="#${Id}">${Message}</a></li>
+<li>${Id} &nbsp; <span class="branch">${Branches}</span><span class="tag">${Tags}</span> <a href="#${Id}">${Message}</a></li>
 </script>
 
 <script type="text/javascript">
-    var repo = "TortoiseGit.git";
+    var repo = "GitScc.git";
     var ctx = $("#canvas")[0].getContext('2d'); ;
     var nodes;
     var links;
@@ -28,7 +28,7 @@
         });
 
         $.ajax({
-            url: "odata/RepositoryGraph('" + repo + "')/Nodes?$top=12&$orderby=Y",
+            url: "odata/RepositoryGraph('" + repo + "')/Nodes?$top=9&$orderby=Y",
             success: function (data) {
                 nodes = data.d;
                 $.ajax({
@@ -47,7 +47,7 @@
 
     });
 
-    var h = 60;
+    var h = 80;
     var w = 100;
     var r = 10;
     var xmax;
@@ -98,6 +98,8 @@
 
             node.Id = node.Id.substring(0, 5);
             ctx.fillText(node.Id, x - 20, y + 5);
+
+            ctx.fillText(node.Branches, x - 40, y + 45);
         }
     }
 

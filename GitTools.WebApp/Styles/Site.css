@@ -293,3 +293,13 @@ div.accountInfo
     text-align: right;
     padding-right: 10px;
 }
+
+.branch
+{
+    color:red;
+}
+
+.tag
+{
+    color:green;
+}

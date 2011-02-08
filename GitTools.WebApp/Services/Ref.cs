@@ -25,5 +25,10 @@ namespace GitTools.WebApp.Services
                 return RefName.Substring(0, RefName.IndexOf("/"));
             }
         }
+
+        public override string ToString()
+        {
+            return string.Format("[{0}]", Name);
+        }
     }
 }

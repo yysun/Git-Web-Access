@@ -73,7 +73,7 @@ namespace GitTools.WebApp.Services
         {
             get
             {
-                var output = Git.Run("log -n 300 --date-order HEAD --pretty=format:%H`%P`%cr`%cn`%ce`%ci`%T`%s", this.RepoFolder);
+                var output = Git.Run("log -n 300 --date-order HEAD --pretty=format:%H`%P`%cr`%cn`%ce`%ci`%T`%s --all --boundary", this.RepoFolder);
                 var logs = output.Split('\n');
                 foreach (string log in logs)
                 {
