@@ -70,11 +70,20 @@ namespace GitTools
 
         public string GetGitDir(string rawUrl)
         {
-            var match = Regex.Match(rawUrl, "/(.[^\\.]+.git)");
-            var path = match.Success ? match.Groups[1].Value : "";
-            return Path.GetFileName(path);
+            //var match = Regex.Match(rawUrl, "/(.[^\\.]+.git)");
+            //var path = match.Success ? match.Groups[1].Value : "";
+            //return Path.GetFileName(path);
+
+            var path = rawUrl.Substring(0, rawUrl.IndexOf(".git") + 4);
+            return path.StartsWith("/") ? path.Substring(1) : path;
+           
         }
 
+        /// <summary>
+        /// for to test with fiddler
+        /// export http_proxy=http://localhost:8888
+        /// </summary>
+        /// <returns></returns>
         private bool HasAccess()
         {
             if (context.Request.RawUrl.IndexOf("git-receive-pack") >= 0)
@@ -97,9 +106,7 @@ namespace GitTools
                         var username = parts[0];
                         var password = parts[1];
 
-                        //verify user, pass, folder
-                        return true;
-
+                        return System.Web.Security.Membership.ValidateUser(username, password);
                     }
                     catch
                     {

@@ -15,7 +15,6 @@ namespace GitTools
         public string CommitDateRelative { get; set; }
         public string Tags { get; set; }
         public string Branches { get; set; }
-        public string DateRel { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
     }

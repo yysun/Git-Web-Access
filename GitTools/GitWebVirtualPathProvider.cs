@@ -5,35 +5,54 @@ using System.Text;
 using System.Web.Hosting;
 using System.Web;
 using System.IO;
+using System.Configuration;
 
 namespace GitTools
 {
     public class GitWebVirtualPathProvider : VirtualPathProvider
     {
-        //we will register this provider in global.asax
-        //public static void AppInitialize()
-        //{
-        //    HostingEnvironment.RegisterVirtualPathProvider(new GitWebVirtualPathProvider()); 
-        //}
-
+        private string baseFolder = ConfigurationManager.AppSettings["GitBaseFolder"];
         
         public override bool FileExists(string virtualPath)
         {
-            var path = HttpContext.Current.Server.MapPath(virtualPath);
-            if (File.Exists(path))
-            {
-                return true;
-            }
-            else
-            {
-                //depends
-                return false;
-            }
+            var filePath = GetProjectWebPath(virtualPath);
+            
+            System.Diagnostics.Trace.WriteLine(string.Format("{0}=>{1}:IsVirtual={2}",
+                virtualPath, filePath, filePath!=null), "VirtualProvider");
+
+            return filePath == null ? base.FileExists(virtualPath) : true;
         }
 
         public override VirtualFile GetFile(string virtualPath)
         {
+            var filePath = GetProjectWebPath(virtualPath);
+
+            return filePath == null ? 
+                base.GetFile(virtualPath) : new ProjectWebFile(filePath);
+        }
+
+        private string GetProjectWebPath(string virtualPath)
+        {
+            try
+            {
+                var path = HttpContext.Current.Server.MapPath(virtualPath);
+                if (File.Exists(path)) return null; //Ignore physical files
+
+                var fileExt = Path.GetExtension(virtualPath);
+                if (fileExt == "" || fileExt == ".htm" || fileExt == ".html" || fileExt == ".css" ||
+                    fileExt == ".jpg" || fileExt == ".js" || fileExt == ".png")
+                {
+                    virtualPath = virtualPath.Substring(virtualPath.IndexOf("/") + 1);
+                    var ss = virtualPath.Split('/');
+                    var filePath = Path.Combine(baseFolder, string.Join("\\", ss));
+                    if (Path.GetExtension(virtualPath) == "") filePath = Path.Combine(filePath, "default.htm");
+
+                    return File.Exists(filePath) ? filePath : null;
+                }
+            }
+            catch { }
             return null;
         }
+
     }
 }

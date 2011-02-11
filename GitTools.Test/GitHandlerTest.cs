@@ -75,17 +75,17 @@ namespace GitTools.Test
         {
             GitHandler handler = new GitHandler();
 
-            var dir = handler.GetGitDir("http://test.com/12 34.git");
-            Assert.AreEqual("12 34", dir);
+            var dir = handler.GetGitDir("/test.com/12 34.git");
+            Assert.AreEqual("test.com/12 34.git", dir);
 
-            dir = handler.GetGitDir("http://test.com/git-scc.git/info/refs?service=git-upload-pack");
-            Assert.AreEqual("git-scc", dir);
+            dir = handler.GetGitDir("/git-scc.git/info/refs?service=git-upload-pack");
+            Assert.AreEqual("git-scc.git", dir);
 
-            dir = handler.GetGitDir("http://test/12 34/git-scc.git/info/refs?service=git-upload-pack");
-            Assert.AreEqual("git-scc", dir);
+            dir = handler.GetGitDir("/12 34/git-scc.git/info/refs?service=git-upload-pack");
+            Assert.AreEqual("12 34/git-scc.git", dir);
 
-            dir = handler.GetGitDir("http://test/12/34/git-scc.git/info/refs?service=git-upload-pack");
-            Assert.AreEqual("git-scc", dir);
+            dir = handler.GetGitDir("/test/12/34/git-scc.git/info/refs?service=git-upload-pack");
+            Assert.AreEqual("test/12/34/git-scc.git", dir);
         }
 
     }

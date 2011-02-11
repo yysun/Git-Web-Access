@@ -137,12 +137,12 @@
                 }
             </li>
             <li class="recaptcha">
-                <div class="message info">
+@*                <div class="message info">
                     <p>To enable CAPTCHA verification, <a href="http://go.microsoft.com/fwlink/?LinkId=204140">install the ASP.NET Web Helpers Library</a> and uncomment ReCaptcha.GetHtml and replace 'PUBLIC_KEY'
                     with your public key.  At the top of this page, uncomment ReCaptcha.Validate and
                     replace 'PRIVATE_KEY' with your private key, and also uncomment the captchaMessage variable.</p>
                     <p>Register for reCAPTCHA keys at <a href="http://recaptcha.net">reCAPTCHA.net</a>.</p>
-                </div>
+                </div>*@
                 @*@ReCaptcha.GetHtml("PUBLIC_KEY", theme: "white")
                 @if (!captchaMessage.IsEmpty()) {
                     <label class="validation-error">@captchaMessage</label>

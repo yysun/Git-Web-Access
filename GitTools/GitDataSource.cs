@@ -16,7 +16,7 @@ namespace GitTools
                 var baseFolder = ConfigurationManager.AppSettings["GitBaseFolder"];
                 var directoryInfo = new DirectoryInfo(baseFolder);
 
-                var repos= from dir in directoryInfo.EnumerateDirectories()
+                var repos= from dir in directoryInfo.EnumerateDirectories("*.git", SearchOption.AllDirectories)
                            where Repository.IsValid(dir.FullName)
                            select Repository.Open(dir.FullName); 
 
@@ -31,7 +31,7 @@ namespace GitTools
                 var baseFolder = ConfigurationManager.AppSettings["GitBaseFolder"];
                 var directoryInfo = new DirectoryInfo(baseFolder);
 
-                var repos = from dir in directoryInfo.EnumerateDirectories()
+                var repos = from dir in directoryInfo.EnumerateDirectories("*.git", SearchOption.AllDirectories)
                             where Repository.IsValid(dir.FullName)
                             select new Graph(Repository.Open(dir.FullName));
 

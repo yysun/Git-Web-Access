@@ -1,0 +1,125 @@
+﻿@{
+    var user = Request["user"];
+    if (string.IsNullOrWhiteSpace(user) || !WebSecurity.UserExists(user))
+    {
+        Response.Redirect("~/");
+    }
+
+    Page.Title = user;
+    Layout = "~/_SiteLayout.cshtml";
+
+    var host = Request.Url.ToString();
+    host = host.Substring(0, host.IndexOf(Request.Url.PathAndQuery));
+    
+    var projectName = Request.Form["projectName"];
+    var projectDesc = Request.Form["projectDesc"];
+    
+    if (IsPost && Request.Form["create_project"] != null)
+    {       
+        try
+        {
+
+            Project.Create(user, projectName, projectDesc);
+            Page.Message = "New project: " + projectName + " created.";
+        }
+        catch (Exception ex)
+        {
+            Page.ErrorMessage = ex.Message;
+        }
+    }
+}
+@section head {
+<script src="@Href("~/Scripts/jQuery.tmpl.min.js")" type="text/javascript"></script>
+<script src="http://ajax.microsoft.com/ajax/jQuery.Validate/1.7/jQuery.Validate.min.js" type="text/javascript"></script>
+}
+
+<p>
+Information about @user and projects.    
+</p>
+
+@if (Page.ErrorMessage!=null) {
+<p class="message error">@Page.ErrorMessage</p>
+}
+@if (Page.Message!=null) {
+<p class="message">@Page.Message</p>
+}
+        
+<div class="span-8">
+<h2>Projects</h2>
+<div id="projectList"></div>
+</div>
+
+<div class="span-7">
+<h2>Events</h2>
+</div>
+<div class="span-9 last">
+
+@if (WebSecurity.IsAuthenticated)
+{ 
+    <h2>New Project</h2>
+
+<form method="post" id="projectform">
+    <fieldset>
+        <legend>Project Information</legend>
+        <ol>
+            <li>
+                <label for="projectName">Project Name:</label>
+                <input type="text" id="projectName" name="projectName" value="@projectName"/> 
+            </li>
+            <li>
+                <label for="projectDesc">Description:</label> 
+                <textarea id="projectDesc" name="projectDesc" rows="6" style="width:300px; height:80px">@projectDesc</textarea>
+            </li>
+        </ol>
+        <p class="form-actions">
+            <input type="submit" name="create_project" value="Create Project" title="Save" />
+        </p>
+    </fieldset>
+</form>
+}
+</div> 
+
+<script id="projectTemplate" type="text/x-jquery-tmpl"> 
+    <div class="project">
+        <div class="project-name"><a href="/@user/${Name}/Repository">${Name}</a></div>
+        <div class="project-url">@host/@user/${Name}.git</div>
+    </div>
+</script>
+
+<script type="text/javascript">
+
+    $(function () {
+
+        $.ajax({
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            url: "/odata/Repositories?$filter=startswith(Id, '@user.')",
+            success: function (data) {
+                $("#projectTemplate").tmpl(data.d).appendTo("#projectList");
+            },
+            error: function (xhr) { alert(xhr.responseText); }
+        });
+
+        $.validator.addMethod("isProjectName", function (value, element) {
+            return /^[\sa-zA-Z0-9_-]{5,51}$/i.test(value);
+            },
+            "Project name has invalid character.");
+
+
+        $("#projectform").validate({
+            rules: {
+                projectName: {
+                    required: true,
+                    minlength: 5,
+                    isProjectName: true
+                }
+            },
+
+            messages: {
+                name: "Please project name"
+            }
+        });
+
+    });
+
+</script>  

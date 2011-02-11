@@ -4,22 +4,34 @@ using System.Data.Services.Common;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Security.Cryptography;
+using System.Text;
+using System.Configuration;
 
 namespace GitTools
 {
-    [DataServiceKey("Name")]
+    [DataServiceKey("Id")]
     public class Repository
     {
+        public string Id { get; set; }
         public string Name { get; set; }
         public string RepoFolder { get; set; }
 
         public static Repository Open(string directory)
         {
-            return new Repository
+            var repo = new Repository
             {
-                Name = Path.GetFileName(directory),
-                RepoFolder = directory
+                Name = Path.GetFileNameWithoutExtension(directory),
+                RepoFolder = directory,
+                Id = GetId(directory)
             };
+            return repo;
+        }
+
+        private static string GetId(string directory)
+        {
+            var baseFolder = ConfigurationManager.AppSettings["GitBaseFolder"];
+            return directory.Substring(baseFolder.Length + 1).Replace("\\", ".").Replace(".git", "");
         }
 
         public static bool IsValid(string path)
@@ -58,45 +70,56 @@ namespace GitTools
         //    }
         //}
 
-        public string CurrentBranch
-        {
-            get
-            {
-                var branches = from b in Git.Run("branch", this.RepoFolder).Split('\n')
-                               where b.StartsWith("*")
-                               select b.Substring(2);
-                return branches.FirstOrDefault();
-            }
-        }
+        //public string CurrentBranch
+        //{
+        //    get
+        //    {
+        //        var branches = from b in Git.Run("branch", this.RepoFolder).Split('\n')
+        //                       where b.StartsWith("*")
+        //                       select b.Substring(2);
+        //        return branches.FirstOrDefault();
+        //    }
+        //}
 
         public IEnumerable<Commit> Commits
         {
             get
             {
-                var output = Git.Run("log -n 100 --date-order HEAD --pretty=format:%H`%P`%cr`%cn`%ce`%ci`%T`%s --all --boundary", this.RepoFolder);
-                var logs = output.Split('\n');
-                foreach (string log in logs)
+                var output = "";
+                try
                 {
-                    string[] ss = log.Split('`');
-
-                    if (ss[0].Contains("'")) ss[0] = ss[0].Replace("'", "");
-
-                    yield return new Commit
+                    output = Git.Run("log -n 100 --date-order HEAD --pretty=format:%H`%P`%cr`%cn`%ce`%ci`%T`%s --all --boundary", this.RepoFolder);
+                }
+                catch
+                {
+                    
+                }
+                if (!string.IsNullOrEmpty(output))
+                {
+                    var logs = output.Split('\n');
+                    foreach (string log in logs)
                     {
-                        Id = ss[0],
-                        ParentIds = ss[1],
-                        CommitDateRelative = ss[2],
-                        CommitterName = ss[3],
-                        CommitterEmail = ss[4],
-                        CommitDate = DateTime.Parse(ss[5]),
-                        Tree = new Tree
+                        string[] ss = log.Split('`');
+
+                        if (ss[0].Contains("'")) ss[0] = ss[0].Replace("'", "");
+
+                        yield return new Commit
                         {
-                            Id = ss[6],
-                            RepoFolder = this.RepoFolder,
-                            Name = "",
-                        },
-                        Message = ss[7] + (ss.Length <= 8 ? "" : "`" + string.Join("`", ss, 8, ss.Length-8))
-                    };
+                            Id = ss[0],
+                            ParentIds = ss[1],
+                            CommitDateRelative = ss[2],
+                            CommitterName = ss[3],
+                            CommitterEmail = ss[4],
+                            CommitDate = DateTime.Parse(ss[5]),
+                            Tree = new Tree
+                            {
+                                Id = ss[6],
+                                RepoFolder = this.RepoFolder,
+                                Name = "",
+                            },
+                            Message = ss[7] + (ss.Length <= 8 ? "" : "`" + string.Join("`", ss, 8, ss.Length - 8))
+                        };
+                    }
                 }
             }
         }

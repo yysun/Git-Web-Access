@@ -1,6 +1,8 @@
 ﻿@{
-    var name = Request["name"];    
-    Page.Title = name;
+    var user = Request["u"];
+    var project = Request["p"];
+    var repo = string.Format("{0}.{1}", user, project);    
+    Page.Title = project;
     Layout = "_SiteLayout.cshtml";
 
 }
@@ -17,7 +19,7 @@
 </script>
 
 <script type="text/javascript">
-    var repo = '@Request["name"]';
+    var repo = '@repo';
     var ctx = $("#canvas")[0].getContext('2d'); ;
     var nodes;
     var links;
@@ -30,11 +32,11 @@
         });
 
         $.ajax({
-            url: "odata/RepositoryGraph('" + repo + "')/Nodes?$top=9&$orderby=Y",
+            url: "/odata/RepositoryGraph('" + repo + "')/Nodes?$top=9&$orderby=Y",
             success: function (data) {
                 nodes = data.d;
                 $.ajax({
-                    url: "odata/RepositoryGraph('" + repo + "')/Links",
+                    url: "/odata/RepositoryGraph('" + repo + "')/Links",
                     success: function (data) {
                         links = data.d;
                         draw(nodes, links);

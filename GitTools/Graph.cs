@@ -6,14 +6,15 @@ using System.Data.Services.Common;
 
 namespace GitTools
 {
-    [DataServiceKey("Name")]
+    [DataServiceKey("Id")]
     public class Graph
-    {
+    {       
         private Repository repository;
         private IList<GraphNode> nodes;
         private IList<GraphLink> links;
 
         public string Name { get; set; }
+        public string Id { get; set; }
 
         public IEnumerable<GraphNode> Nodes
         {
@@ -37,6 +38,7 @@ namespace GitTools
         {
             this.repository = repository;
             this.Name = repository.Name;
+            this.Id = repository.Id;
         }
 
         private void GenerateGraph()

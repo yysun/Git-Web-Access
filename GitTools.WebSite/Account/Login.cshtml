@@ -42,7 +42,7 @@
             if (WebSecurity.Login(username, password, rememberMe)) {
                 var returnUrl = Request.QueryString["ReturnUrl"];
                 if (returnUrl.IsEmpty()){
-                    Response.Redirect("~/");
+                    Response.Redirect("~/" + username );
                 } else {
                     Context.RedirectLocal(returnUrl);
                 }

@@ -6,34 +6,21 @@ to use a different color start by replacing all instances of
 
 body
 {
-    background-color: #5c87b2;
     font-size: .85em;
     font-family: "Trebuchet MS" , Verdana, Helvetica, Sans-Serif;
-    margin: 0;
-    padding: 0;
     color: #696969;
 }
 
-a:link
+a:link, a:visited
 {
-    color: #034af3;
-    text-decoration: underline;
-}
-
-a:visited
-{
-    color: #505abc;
+    color: #333;
+    text-decoration: none;
 }
 
 a:hover
 {
-    color: #1d60ff;
-    text-decoration: none;
-}
-
-a:active
-{
-    color: #12eb87;
+    color: #333;
+    text-decoration: underline;
 }
 
 /* HEADINGS   
@@ -41,13 +28,16 @@ a:active
 h1, h2
 {
     font-size: 1.5em;
-    color: #666666;
+    color: #696969;
     font-variant: small-caps;
     text-transform: none;
     font-weight: 200;
     margin-bottom: 0px;
 }
-
+h2
+{
+    border-bottom:1px solid #999;
+}
 h3
 {
     font-size: 1.2em;
@@ -67,35 +57,24 @@ h5, h6
 ----------------------------------------------------------*/
 #page
 {
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
 }
-
 #header
 {
-    position: relative;
-    margin-bottom: 0;
-    color: #000;
-    padding: 0;
+    margin-top:20px;
 }
-
-#main
+#content
 {
-    padding: 5px 10px;
-    background-color: #fff;
-    border-radius: 4px 0 4px 4px;
-    -webkit-border-radius: 4px 0 4px 4px;
-    -moz-border-radius: 4px 0 4px 4px;
+    min-height:500px;
+    border-top:1px solid #999;
+    border-bottom:1px solid #999;
+    padding-top:10px;
 }
-
 #footer
 {
-    padding: 10px 0;
     text-align: center;
-    line-height: normal;
-    margin: 0;
     font-size: .9em;
+    height:50px;
+    padding-top:10px;
 }
 
 /* Site Title 
@@ -106,7 +85,6 @@ h5, h6
     font-weight: bold;
     padding: 5px 0;
     margin: 0;
-    color: #fff;
     border: none;
     line-height: 2em;
     font-size: 22px; /*CSS3 properties*/
@@ -118,10 +96,10 @@ h5, h6
 #login
 {
     float: right;
-    font-size: 1.1em;
     display: block;
     text-align: right;
     color: #000;
+    margin-top:20px;
 }
 
 #login li
@@ -132,17 +110,6 @@ h5, h6
     padding-left: 5px;
 }
 
-#login a:link, #login a:visited
-{
-    color: #fff;
-    text-decoration: none;
-}
-
-#login a:hover
-{
-    color: #fff;
-    text-decoration: underline;
-}
 
 /* Tab Menu   
 ----------------------------------------------------------*/
@@ -153,7 +120,6 @@ ul#menu
     padding: 0 0 2px;
     position: relative;
     margin: 0;
-    text-align: right;
 }
 
 ul#menu li
@@ -168,7 +134,7 @@ ul#menu li a
     font-weight: bold;
     text-decoration: none;
     line-height: 2.8em;
-    background-color: #e8eef4;
+    background-color: #fff;
     color: #034af3; /*CSS3 properties*/
     border-radius: 4px 4px 0 0;
     -webkit-border-radius: 4px 4px 0 0;
@@ -177,7 +143,7 @@ ul#menu li a
 
 ul#menu li a:hover
 {
-    background-color: #fff;
+    background-color: #e8eef4;
     text-decoration: none;
 }
 
@@ -306,4 +272,32 @@ input[type="text"].error-field, input[type="password"].error-field
 .tag
 {
     color: green;
+}
+
+.project
+{
+    margin-top:20px;
+    overflow:hidden;
+}
+
+.project:hover
+{
+    background-color:#eee;
+}
+
+.project-name
+{
+    font-size: 2em;
+}
+
+.project-url
+{
+    font-size: 0.8em;
+    color:#999;
+}
+
+.project-del
+{
+    margin-top:-6px;
+    font-size: 0.9em;
 }
