@@ -47,16 +47,16 @@
 }
 
 <form method="post" action="">
-<div class="span-12">
+<div class="span-15">
 <h2>Projects</h2>
     <div id="projectList"></div>
 </div>
-<div class="span-12 last">
+<div class="span-9 last">
     <fieldset>
         <legend>Server Configuration</legend>
         <ol>
             <li>
-             Please make sure <a href="http://code.google.com/p/msysgit/downloads/list">Git for Windows (1.7+)</a> is installed and enter the path of git executable (git.exe)
+             Please make sure <a href="http://code.google.com/p/msysgit/downloads/list">Git for Windows (1.7+)</a> is installed and enter the path of git executable.
                 <label for="gitExePath">Git Executable Path:</label>
                 <input type="text" id="gitExePath" name="gitExePath" value="@gitExePath"/> 
                 <br /><br />
@@ -77,7 +77,7 @@
 <script id="projectTemplate" type="text/x-jquery-tmpl"> 
     <div class="project">
         <div class="project-name"><a href="/${Id}/Repository">${Name}</a></div>
-        <div class="project-url span-10">@host/${Id}</div>
+        <div class="project-url span-13">@host/${Id}.git</div>
         <div class="project-del span-2 last"><a href="/${Id}/Repository">Delete</a></div>
     </div>
 </script>

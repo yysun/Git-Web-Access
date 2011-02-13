@@ -9,6 +9,7 @@ body
     font-size: .85em;
     font-family: "Trebuchet MS" , Verdana, Helvetica, Sans-Serif;
     color: #696969;
+    background-color:#999999;
 }
 
 a:link, a:visited
@@ -57,6 +58,8 @@ h5, h6
 ----------------------------------------------------------*/
 #page
 {
+    background-color:#fff;
+    padding: 0px 20px;
 }
 #header
 {
@@ -262,6 +265,11 @@ input[type="text"].error-field, input[type="password"].error-field
 .validation-error:before
 {
     content: "»";
+}
+
+.commit
+{
+   font-size:0.8em;
 }
 
 .branch

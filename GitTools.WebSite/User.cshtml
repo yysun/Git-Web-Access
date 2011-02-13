@@ -19,7 +19,7 @@
         try
         {
 
-            Project.Create(user, projectName, projectDesc);
+            Project.Create(WebSecurity.CurrentUserName, projectName, projectDesc);
             Page.Message = "New project: " + projectName + " created.";
         }
         catch (Exception ex)
@@ -44,14 +44,11 @@ Information about @user and projects.
 <p class="message">@Page.Message</p>
 }
         
-<div class="span-8">
+<div class="span-15">
 <h2>Projects</h2>
 <div id="projectList"></div>
 </div>
 
-<div class="span-7">
-<h2>Events</h2>
-</div>
 <div class="span-9 last">
 
 @if (WebSecurity.IsAuthenticated)
