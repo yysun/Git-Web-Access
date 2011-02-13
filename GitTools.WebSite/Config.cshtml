@@ -1,12 +1,17 @@
 ﻿@using System.Configuration
 @using System.Web.Configuration
 @{
+    if (!Roles.IsUserInRole("admin")) {
+        Response.Redirect("/Account/Login?returnurl=/Config.cshtml");
+    }
+    
     Page.Title = "Site Administration";
     Layout = "~/_SiteLayout.cshtml";
-
+    <p>Administrative features to manage this web site.</p>
+    
     var host = Request.Url.ToString();
     host = host.Substring(0, host.IndexOf(Request.Url.PathAndQuery));
-        
+
     var errorMessage = "";
     var isValid = true;
     var gitExePath = ConfigurationManager.AppSettings["GitExePath"];
@@ -19,32 +24,26 @@
         if (!File.Exists(gitExePath))
         {
             isValid = false;
+            <p class="message error">@gitExePath does not exist.</p>
         }
         if (!Directory.Exists(gitRootFolder))
         {
             isValid = false;
+            <p class="message error">@gitRootFolder does not exist.</p>
         }
-        if (isValid) 
+        if (isValid)
         {
             var config = WebConfigurationManager.OpenWebConfiguration("~");
             var appsettings = (AppSettingsSection)config.GetSection("appSettings");
             appsettings.Settings["GitExePath"].Value = gitExePath;
             appsettings.Settings["GitBaseFolder"].Value = gitRootFolder;
-            config.Save();            
+            config.Save();
+            <p class="message">Configuration saved.</p>
         }
     }   
 }
 @section head {
 <script src="@Href("~/Scripts/jQuery.tmpl.min.js")" type="text/javascript"></script>
-}
-<p>
-Administrative features to manage this web site.
-</p>
-
-@if (!errorMessage.IsEmpty()) {
-     <p class="message error">
-        @errorMessage
-    </p>
 }
 
 <form method="post" action="">

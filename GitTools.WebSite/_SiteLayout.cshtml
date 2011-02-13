@@ -8,12 +8,10 @@
     <!--[if lt IE 8]><link rel="stylesheet" href="@Href("~/Styles/blueprint/ie.css")" type="text/css" media="screen, projection"><![endif]-->
     <link href="@Href("~/Styles/Site.css")" rel="stylesheet" />
     <link href="@Href("~/favicon.ico")" rel="shortcut icon" type="image/x-icon" />
-
-    @*<script src="@Href("~/Scripts/jquery-1.5.min.js")" type="text/javascript"></script>*@
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script>
 
     @RenderSection("head", required: false)
+
 </head>
 <body>
     <div id="page" class="container">
@@ -27,9 +25,9 @@
                         <li><a href="@Href("~/")">Home</a></li>
                         @if (Roles.IsUserInRole("admin"))
                         {
-                            <li><a href="@Href("~/Admin.cshtml")">Admin</a></li>
+                            <li><a href="@Href("~/Config.cshtml")">Admin</a></li>
                         }
-                        <li><a href="@Href("~/")@WebSecurity.CurrentUserName">Projects</a></li>
+                        <li><a href="@Href("~/")@WebSecurity.CurrentUserName">Profile</a></li>
                         <li><a href="@Href("~/Account/ChangePassword")">Password</a></li>
                         <li><a href="@Href("~/Account/Logout")">Logout</a></li>
                     </ul>
@@ -49,6 +47,7 @@
             </ul>*@
         </div>
         <div id="content" class="span-24 last">
+            @ConfigHelper.ValidateConfiguration()
             <h1>@Page.Title</h1>
             @RenderBody()
         </div>

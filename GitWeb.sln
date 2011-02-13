@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitTools", "GitTools\GitTools.csproj", "{35F04283-AD6A-420F-B6AE-CF3F93D24C08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitTools.WebApp", "GitTools.WebApp\GitTools.WebApp.csproj", "{E74E1736-095E-4F5E-811F-923288D85F24}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitTools.Test", "GitTools.Test\GitTools.Test.csproj", "{4BA27C17-EF35-41DA-9107-1BBE7DCE86D9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8145DF67-0238-48C1-860A-4B58873E2166}"
@@ -51,10 +49,6 @@ Global
 		{35F04283-AD6A-420F-B6AE-CF3F93D24C08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35F04283-AD6A-420F-B6AE-CF3F93D24C08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35F04283-AD6A-420F-B6AE-CF3F93D24C08}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E74E1736-095E-4F5E-811F-923288D85F24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E74E1736-095E-4F5E-811F-923288D85F24}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E74E1736-095E-4F5E-811F-923288D85F24}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E74E1736-095E-4F5E-811F-923288D85F24}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4BA27C17-EF35-41DA-9107-1BBE7DCE86D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4BA27C17-EF35-41DA-9107-1BBE7DCE86D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BA27C17-EF35-41DA-9107-1BBE7DCE86D9}.Release|Any CPU.ActiveCfg = Release|Any CPU

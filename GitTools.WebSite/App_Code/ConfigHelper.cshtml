@@ -1,0 +1,19 @@
+﻿@using System.Configuration
+@helper ValidateConfiguration() {
+
+    var gitExePath = ConfigurationManager.AppSettings["GitExePath"];
+    var gitRootFolder = ConfigurationManager.AppSettings["GitBaseFolder"];
+    var msg = "";
+    if (!File.Exists(gitExePath))
+    {
+        msg = gitExePath + " does not exist. ";
+    }
+    if (!Directory.Exists(gitRootFolder))
+    {
+        msg = gitRootFolder + " does not exist. ";
+    }
+    if(!msg.IsEmpty())
+    {
+        <div class="message error">@msg, please login as admin to <a href="/Config.cshtml">configure</a>.</div>
+    }
+}
