@@ -105,8 +105,11 @@ namespace GitTools
                         string[] parts = userNameAndPassword.Split(':');
                         var username = parts[0];
                         var password = parts[1];
+                        var gitWorkingDir = GetGitDir(context.Request.RawUrl);
+                        
+                        return username == gitWorkingDir.Substring(0, gitWorkingDir.IndexOf("/")) &&
+                               System.Web.Security.Membership.ValidateUser(username, password);
 
-                        return System.Web.Security.Membership.ValidateUser(username, password);
                     }
                     catch
                     {
