@@ -86,7 +86,11 @@ namespace GitTools
         /// <returns></returns>
         private bool HasAccess()
         {
-            if (context.Request.RawUrl.IndexOf("git-receive-pack") >= 0)
+            var authMode = ConfigurationManager.AppSettings["GitAuthenticationMode"];
+
+            if (string.Compare(authMode, "none", true)==0) return true;
+            
+            if (string.Compare(authMode, "all")==0 || context.Request.RawUrl.IndexOf("git-receive-pack") >= 0)
             {
                 string authHeader = context.Request.Headers["Authorization"];
 
