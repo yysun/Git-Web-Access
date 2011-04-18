@@ -138,11 +138,20 @@ namespace GitTools
 
             using (var file = File.Create(fin))
             {
-                byte[] buffer = new byte[4096];
-                int bytesRead;
-                while ((bytesRead = context.Request.InputStream.Read(buffer, 0, buffer.Length)) != 0)
+                var encoding = context.Request.Headers["Content-Encoding"];
+                if (string.IsNullOrEmpty(encoding))
+                    encoding = context.Request.ContentEncoding.EncodingName;
+
+                if (encoding.Equals("gzip"))
                 {
-                    file.Write(buffer, 0, bytesRead);
+                    using (GZipStream decomp = new GZipStream(context.Request.InputStream, CompressionMode.Decompress))
+                    {
+                        decomp.CopyTo(file);
+                    }
+                }
+                else
+                {
+                    context.Request.InputStream.CopyTo(file);
                 }
             }
 
