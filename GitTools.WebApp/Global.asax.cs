@@ -6,7 +6,6 @@ using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.Routing;
 using System.ServiceModel.Activation;
-using GitTools.WebApp.Services;
 
 namespace GitTools.WebApp
 {

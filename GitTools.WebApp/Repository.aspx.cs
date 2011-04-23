@@ -21,18 +21,24 @@ namespace GitTools.WebApp
         {
             
             var directoryInfo = new DirectoryInfo(baseFolder);
+            var folders = directoryInfo.EnumerateDirectories(string.Format("*.{0}", Git.GIT_EXTENSION), SearchOption.AllDirectories)
+                                       .Select(d => new { 
+                                           Name = d.Name, 
+                                           Id = d.FullName.Substring(baseFolder.Length + 1)
+                                                          .Replace("\\", ".")
+                                                           .Replace(".git", "") 
+                                       }).ToList();
 
-            gwRepos.DataSource = directoryInfo.EnumerateDirectories(string.Format("*.{0}", Git.GIT_EXTENSION), SearchOption.AllDirectories);
+            gwRepos.DataSource = folders;
             gwRepos.DataBind();
         }
 
-        protected string GetUrl(object dataItem)
+        protected string GetUrl(dynamic dataItem)
         {
-            var dirInfo = dataItem as DirectoryInfo;
             var host = Request.Url.ToString().Replace("Repository.aspx", "");
 
-            var directory = dirInfo.FullName;
-            directory = directory.Substring(baseFolder.Length + 1).Replace("\\", "/");
+            var directory = dataItem.Id as string;
+            directory = directory.Replace("\\", "/");
 
             return string.Format("{0}{1}", host, directory);
         }

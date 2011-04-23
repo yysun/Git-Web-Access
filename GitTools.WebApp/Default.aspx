@@ -5,8 +5,9 @@
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <h2>
-        Welcome to Git Web Access
+        Welcome to Git Web Access Sample Web Application
     </h2>
+    <p></p>
     <p>
         This site provides web access to Git repositories. To start use this site,</p>
     <ol>
@@ -42,5 +43,5 @@
         </tr>
     </table>
     <p>Once the above information is saved, you can start to <a href="Repository.aspx">manage your repositories</a>, 
-        or <a href="Help.aspx">read help</a>.</p>
+        or visit <a href="http://gitweb.codeplex.com">Git Web Access Project Site</a>.</p>
 </asp:Content>

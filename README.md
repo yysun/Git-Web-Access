@@ -45,6 +45,8 @@ Screenshots
 
 Change Logs
 -----------
+#### V0.5.2
+#### V0.4
 #### V0.3
 * Push authentication against ASP.NET membership. 
 * New ASP.NET web pages sample web site (using Razor Syntax).
@@ -57,3 +59,8 @@ Change Logs
 * Git Smart HTTP spike. 
 * WCF Data Services to expose Git repository information.
 * Sample ASP.NET web forms application
+
+
+Known Issues
+NuGet package
+http://nuget.codeplex.com/workitem/712

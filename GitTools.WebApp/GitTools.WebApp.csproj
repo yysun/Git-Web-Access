@@ -39,6 +39,9 @@
     <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GitTools, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GitWebAccess.0.5.3\lib\GitTools.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -69,9 +72,10 @@
     <Content Include="Account\ChangePasswordSuccess.aspx" />
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Register.aspx" />
-    <Content Include="Graph.htm" />
-    <Content Include="GraphX.htm" />
+    <Content Include="GitDataService.svc" />
+    <Content Include="GitWebAccess-Readme.htm" />
     <Content Include="Help.aspx" />
+    <Content Include="git.js" />
     <Content Include="Repository.aspx" />
     <Content Include="Scripts\jquery-1.5-vsdoc.js" />
     <Content Include="Scripts\jquery-1.5.js" />
@@ -80,7 +84,6 @@
     <Content Include="Scripts\jQuery.tmpl.js" />
     <Content Include="Scripts\jQuery.tmpl.min.js" />
     <Content Include="Security.aspx" />
-    <Content Include="Services\GitDataService.svc" />
     <Content Include="Styles\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
@@ -137,6 +140,7 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="GitDataService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -161,9 +165,6 @@
     </Compile>
     <Compile Include="Security.aspx.designer.cs">
       <DependentUpon>Security.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Services\GitDataService.svc.cs">
-      <DependentUpon>GitDataService.svc</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -195,10 +196,7 @@
     <Content Include="Site.Master" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GitTools\GitTools.csproj">
-      <Project>{35F04283-AD6A-420F-B6AE-CF3F93D24C08}</Project>
-      <Name>GitTools</Name>
-    </ProjectReference>
+    <Content Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

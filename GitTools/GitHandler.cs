@@ -6,6 +6,7 @@ using System.Text;
 using System.Web;
 using System.Configuration;
 using System.Text.RegularExpressions;
+using System.IO.Compression;
 
 namespace GitTools
 {
@@ -88,9 +89,9 @@ namespace GitTools
         {
             var authMode = ConfigurationManager.AppSettings["GitAuthenticationMode"];
 
-            if (string.IsNullOrEmpty(authMode) || authMode.Equals("none")) return true;
+            if (string.IsNullOrEmpty(authMode) || string.Compare(authMode, "none", true) == 0) return true;
 
-            if (authMode.Equals("all") || context.Request.RawUrl.IndexOf("git-receive-pack") >= 0)
+            if (string.Compare(authMode, "all", true) == 0 || context.Request.RawUrl.IndexOf("git-receive-pack") >= 0)
             {
                 string authHeader = context.Request.Headers["Authorization"];
 

@@ -14,9 +14,9 @@
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:HyperLinkField HeaderStyle-HorizontalAlign="Left"
-                 DataNavigateUrlFormatString="ViewRepository.aspx?name={0}"  DataNavigateUrlFields="Name" Text="view"/>
+                 DataNavigateUrlFormatString="ViewRepository.aspx?name={0}"  DataNavigateUrlFields="Id" Text="view"/>
             <asp:HyperLinkField HeaderStyle-HorizontalAlign="Left"
-                 DataNavigateUrlFormatString="ViewCommits.aspx?name={0}"  DataNavigateUrlFields="Name" Text="explore" />
+                 DataNavigateUrlFormatString="ViewCommits.aspx?name={0}"  DataNavigateUrlFields="Id" Text="explore" />
         </Columns>
     </asp:GridView>
     <br /><br />
