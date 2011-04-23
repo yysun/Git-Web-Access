@@ -1,16 +1,13 @@
 ﻿@{
-    var user = Request["u"];
-    var project = Request["p"];
-    var repo = string.Format("{0}.{1}", user, project);    
-    Page.Title = project;
+    var repo = string.Join(".", UrlData);
+    Page.Title = UrlData[UrlData.Count()-1];
     Layout = "_SiteLayout.cshtml";
-
 }
 
 @section head {
     <script src="@Href("~/Scripts/jQuery.tmpl.min.js")" type="text/javascript"></script>
 }
-<p><a href="/@user">Back to projects</a></p>
+<p><a href="/">Back to projects</a></p>
 <canvas id="canvas" width="120" height="100" style="margin-top:10px"></canvas>
 <div>
 <div style="float:left;">
@@ -57,8 +54,6 @@
             },
             error: function (xhr) { alert(xhr.responseText); }
         });
-
-
     });
 
     var h = 60;

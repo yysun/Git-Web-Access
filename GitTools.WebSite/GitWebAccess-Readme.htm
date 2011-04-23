@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head id="Head1" runat="server">
+    <title>Git Web Access</title>
+    <style type="text/css">
+        body
+        {
+            font-size: 14px;
+            font-family: "Trebuchet MS" , Verdana, Helvetica, Sans-Serif;
+            color: #696969;
+            padding: 10px 50px;
+        }
+        a:link, a:visited
+        {
+            text-decoration: none;
+        }
+        a:hover
+        {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <form id="Form1" runat="server">
+    <h1>
+        Welcome to Git Web Access
+    </h1>
+    <hr />
+    <p>
+        Congratulations! You have successfully installed <a href="http://gitweb.codeplex.com">Git Web
+            Access</a>. </p>
+    <h2>
+        Settings</h2>
+    <p>
+        Before start, please check the following configuration settings.</p>
+    <ol>
+        <li>Please make sure <a href="http://code.google.com/p/msysgit/downloads/list">Git for
+            Windows (1.7+)</a> is installed and the path of git executable (git.exe) is 
+            entered in web.config.</li>
+        <li>Please enter your git repositories' root folder that is the parent folder of all
+            repositories in web.config.</li>
+        <li>Please configure the security settings. See next section.</li>
+    </ol>
+    <h2>
+        Security</h2>
+        <ul>
+    <li>
+        To authentication push and pull, change GitAuthenticationMode to All.
+    <pre style="font-family: Consolas; font-size: 13; color: black; background: white;"><span 
+        style="color:blue;">&nbsp;&nbsp;&nbsp;&nbsp;&lt;</span><span style="color:#a31515;">add</span><span 
+        style="color:blue;">&nbsp;</span><span style="color:red;">key</span><span 
+        style="color:blue;">=</span>&quot;<span style="color:blue;">GitAuthenticationMode</span>&quot;<span 
+        style="color:blue;">&nbsp;</span><span style="color:red;">value</span><span 
+        style="color:blue;">=</span>&quot;<span style="color:blue;">All</span>&quot;<span 
+        style="color:blue;">&nbsp;/&gt;</span>    </pre></li>
+    <li>To authenticate push only, change GitAuthenticationMode to Push.
+    <pre style="font-family: Consolas; font-size: 13; color: black; background: white;"><span 
+        style="color:blue;">&nbsp;&nbsp;&nbsp;&nbsp;&lt;</span><span style="color:#a31515;">add</span><span 
+        style="color:blue;">&nbsp;</span><span style="color:red;">key</span><span 
+        style="color:blue;">=</span>&quot;<span style="color:blue;">GitAuthenticationMode</span>&quot;<span 
+        style="color:blue;">&nbsp;</span><span style="color:red;">value</span><span 
+        style="color:blue;">=</span>&quot;<span style="color:blue;">Push</span>&quot;<span style="color:blue;">&nbsp;/&gt;</span>    </pre></li>
+    <li>
+        To disable authentication, change GitAuthenticationMode to None.
+    <pre style="font-family: Consolas; font-size: 13; color: black; background: white;"><span 
+        style="color:blue;">&nbsp;&nbsp;&nbsp;&nbsp;&lt;</span><span style="color:#a31515;">add</span><span 
+        style="color:blue;">&nbsp;</span><span style="color:red;">key</span><span 
+        style="color:blue;">=</span>&quot;<span style="color:blue;">GitAuthenticationMode</span>&quot;<span 
+        style="color:blue;">&nbsp;</span><span style="color:red;">value</span><span 
+        style="color:blue;">=</span>&quot;<span style="color:blue;">None</span>&quot;<span 
+        style="color:blue;">&nbsp;/&gt;</span>    </pre></li>
+    </ul>
+    <h2>
+        OData Service Endpoint</h2>
+    <p>
+        The default OData service endpoint is GitDataService.svc. To enable a simplified
+        endpoint, called odata by adding the following line of code to the Global.asax.cs
+        file or _AppStart.cshtml file.</p>
+    <pre style="font-family: Consolas; font-size: 13; color: black; background: white;">&nbsp;&nbsp;&nbsp;&nbsp;System.Web.Routing.<span style="color: #2b91af;">RouteTable</span>.Routes.Add(
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">new</span>&nbsp;System.ServiceModel.Activation.<span
+    style="color: #2b91af;">ServiceRoute</span>(<span style="color: #a31515;">&quot;odata&quot;</span>,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">new</span>&nbsp;System.ServiceModel.Activation.<span
+    style="color: #2b91af;">WebServiceHostFactory</span>(),&nbsp;<span style="color: blue;">typeof</span>(<span
+        style="color: #2b91af;">GitDataService</span>)));</pre>
+    <p>
+        &nbsp;</p>
+    <p>
+        &nbsp;</p>
+        <hr />
+    <p>
+        For more information, please visit the <a href="http://gitweb.codeplex.com">Git Web
+            Access Project Site</a>.</p>
+    <p>
+        &copy; Copyright 2010-2011 Yiyi Sun. All right reserved.</p>
+    </form>
+</body>
+</html>

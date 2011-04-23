@@ -18,25 +18,30 @@ public class Project
         //
     }
 
-    public static void Create(string user, string name, string desc)
+        private static string GetSafeId(string id)
     {
-        if (string.IsNullOrEmpty(user)) throw new ArgumentNullException("user name (for new project)");
-        if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("project name (for new project)");
-
-        var folder = string.Format("{0}/{1}", user, name);
-
-        string ext = Path.GetExtension(folder);
-        if (string.IsNullOrEmpty(ext) || ext != Git.GIT_EXTENSION)
+        foreach (char c in Path.GetInvalidFileNameChars())
         {
-            folder = Path.ChangeExtension(folder, Git.GIT_EXTENSION);
+            id = id.Replace(c, '-');
         }
-
-        folder = folder.Replace(" ", "-");
-        if (Directory.Exists(folder)) throw new Exception(name + " is not available.");
+        foreach (char c in @" ~`!@#$%^&+=,;""<>".ToCharArray())
+        {
+            id = id.Replace(c, '-');
+        }
+        return id;
+    }
+    
+    public static void Create(string user, string name)
+    {
+        if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("project name (for new project)");
+        var id = GetSafeId(name);       
+        var folder = string.IsNullOrEmpty(user) ? id : string.Format("{0}/{1}", user, id);
+        folder = folder + "." + Git.GIT_EXTENSION;
 
         var gitBaseDir = ConfigurationManager.AppSettings["GitBaseFolder"];
+        if (!Directory.Exists(gitBaseDir)) throw new Exception(gitBaseDir + " is not available.");
+        
         Git.Run("init --bare " + folder, gitBaseDir);
-
     }
 
 }

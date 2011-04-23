@@ -75,7 +75,6 @@
     <Content Include="GitDataService.svc" />
     <Content Include="GitWebAccess-Readme.htm" />
     <Content Include="Help.aspx" />
-    <Content Include="git.js" />
     <Content Include="Repository.aspx" />
     <Content Include="Scripts\jquery-1.5-vsdoc.js" />
     <Content Include="Scripts\jquery-1.5.js" />

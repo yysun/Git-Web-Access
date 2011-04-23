@@ -1,5 +1,5 @@
 ﻿@{  
-    WebSecurity.InitializeDatabaseConnection("StarterSite", "UserProfile", "UserId", "UserName", true);
+    WebSecurity.InitializeDatabaseConnection("StarterSite", "UserProfile", "UserId", "Email", true);
     // WebMail.SmtpServer = "mailserver.example.com";
     // WebMail.EnableSsl = true;
     // WebMail.UserName = "username@example.com";
@@ -10,5 +10,5 @@
         new System.ServiceModel.Activation.ServiceRoute("odata",
             new System.ServiceModel.Activation.WebServiceHostFactory(), typeof(GitDataService)));
 
-    System.Web.Hosting.HostingEnvironment.RegisterVirtualPathProvider(new GitTools.GitWebVirtualPathProvider());
+    
 }

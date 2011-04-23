@@ -23,19 +23,17 @@
                 {
                     <ul>
                         <li><a href="@Href("~/")">Home</a></li>
-                        @if (Roles.IsUserInRole("admin"))
-                        {
-                            <li><a href="@Href("~/Config.cshtml")">Admin</a></li>
-                        }
-                        <li><a href="@Href("~/")@WebSecurity.CurrentUserName">Projects</a></li>
+                        <li><a href="@Href("~/About")">About</a></li>
                         <li><a href="@Href("~/Account/ChangePassword")">Account</a></li>
                         <li><a href="@Href("~/Account/Logout")">Logout</a></li>
+
                     </ul>
                 }
                 else
                 {
                     <ul>
                         <li><a href="@Href("~/")">Home</a></li>
+                        <li><a href="@Href("~/About")">About</a></li>                        
                         <li><a href="@Href("~/Account/Register")">Register</a></li>
                         <li><a href="@Href("~/Account/Login")">Login</a></li>
                     </ul>
@@ -52,7 +50,7 @@
             @RenderBody()
         </div>
         <div id="footer" class="span-24 last">
-            &copy; @DateTime.Now.Year - Git Web Access (http://gitweb.codeplex.com)
+            &copy; @DateTime.Now.Year - Git Web Access (<a href="http://gitweb.codeplex.com">http://gitweb.codeplex.com</a>)
         </div>
     </div>
 </body>
