@@ -28,3 +28,5 @@ obj/
 _ReSharper*/
 [Tt]est[Rr]esult*
 Lib*/
+StarterSite.sdf
+GitTools.WebApp.Publish.xml

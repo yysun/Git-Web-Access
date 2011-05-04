@@ -22,11 +22,11 @@ namespace GitTools.WebApp
             
             var directoryInfo = new DirectoryInfo(baseFolder);
             var folders = directoryInfo.EnumerateDirectories(string.Format("*.{0}", Git.GIT_EXTENSION), SearchOption.AllDirectories)
-                                       .Select(d => new { 
-                                           Name = d.Name, 
+                                       .Select(d => new {
+                                           Name = d.Name.Replace("." + Git.GIT_EXTENSION, ""), 
                                            Id = d.FullName.Substring(baseFolder.Length + 1)
                                                           .Replace("\\", ".")
-                                                           .Replace(".git", "") 
+                                                          .Replace("." + Git.GIT_EXTENSION, "") 
                                        }).ToList();
 
             gwRepos.DataSource = folders;
@@ -40,7 +40,7 @@ namespace GitTools.WebApp
             var directory = dataItem.Id as string;
             directory = directory.Replace("\\", "/");
 
-            return string.Format("{0}{1}", host, directory);
+            return string.Format("{0}{1}.git", host, directory);
         }
 
         protected void btnCreateFolder_Click(object sender, EventArgs e)

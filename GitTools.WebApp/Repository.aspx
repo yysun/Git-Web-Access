@@ -15,9 +15,9 @@
             </asp:TemplateField>
             <asp:HyperLinkField HeaderStyle-HorizontalAlign="Left"
                  DataNavigateUrlFormatString="ViewRepository.aspx?name={0}"  DataNavigateUrlFields="Id" Text="view"/>
-            <asp:HyperLinkField HeaderStyle-HorizontalAlign="Left"
+<%--            <asp:HyperLinkField HeaderStyle-HorizontalAlign="Left"
                  DataNavigateUrlFormatString="ViewCommits.aspx?name={0}"  DataNavigateUrlFields="Id" Text="explore" />
-        </Columns>
+--%>        </Columns>
     </asp:GridView>
     <br /><br />
     <div>
