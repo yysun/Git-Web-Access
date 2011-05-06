@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<configuration>
-  <appSettings>
-    <add key="GitExePath" value="C:\Program Files (x86)\Git\bin\git.exe" />
-    <add key="GitBaseFolder" value="C:\Users\Public" />
-    <!--<add key="GitAuthenticationMode" value="Push" />-->
-  </appSettings>
-</configuration>

@@ -30,3 +30,5 @@ _ReSharper*/
 Lib*/
 StarterSite.sdf
 GitTools.WebApp.Publish.xml
+Publish*/
+*.docstates

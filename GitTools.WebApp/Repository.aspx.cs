@@ -13,8 +13,27 @@ namespace GitTools.WebApp
     {
         string baseFolder = ConfigurationManager.AppSettings["GitBaseFolder"];
         protected void Page_Load(object sender, EventArgs e)
-        {          
-            if (!IsPostBack) BindData();
+        {
+            var gitExePath = ConfigurationManager.AppSettings["GitExePath"];
+            var gitRootFolder = ConfigurationManager.AppSettings["GitBaseFolder"];
+            var msg = "";
+            if (!File.Exists(gitExePath))
+            {
+                msg = gitExePath + " does not exist. ";
+            }
+            if (!Directory.Exists(gitRootFolder))
+            {
+                msg += gitRootFolder + " does not exist. ";
+            }
+
+            if (!string.IsNullOrWhiteSpace(msg))
+            {
+                Label1.Text = msg;
+            }
+            else
+            {
+                if (!IsPostBack) BindData();
+            }
         }
 
         private void BindData()
@@ -45,23 +64,30 @@ namespace GitTools.WebApp
 
         protected void btnCreateFolder_Click(object sender, EventArgs e)
         {
-            var folder = tbCreateFolderName.Text;
-
-            if (string.IsNullOrEmpty(folder)) return;
-
-            string ext = Path.GetExtension(folder);
-            if (string.IsNullOrEmpty(ext) || ext != Git.GIT_EXTENSION)
+            try
             {
-                folder = Path.ChangeExtension(folder, Git.GIT_EXTENSION);
+                var folder = tbCreateFolderName.Text;
+
+                if (string.IsNullOrEmpty(folder)) return;
+
+                string ext = Path.GetExtension(folder);
+                if (string.IsNullOrEmpty(ext) || ext != Git.GIT_EXTENSION)
+                {
+                    folder = Path.ChangeExtension(folder, Git.GIT_EXTENSION);
+                }
+
+                folder = folder.Replace(" ", "-");
+                if (Directory.Exists(folder)) return;
+
+
+                var gitBaseDir = ConfigurationManager.AppSettings["GitBaseFolder"];
+                Git.Run("init --bare " + folder, gitBaseDir);
+                BindData();
             }
-            
-            folder = folder.Replace(" ", "-");
-            if (Directory.Exists(folder)) return;
-
-
-            var gitBaseDir = ConfigurationManager.AppSettings["GitBaseFolder"];
-            Git.Run("init --bare " + folder, gitBaseDir);
-            BindData();
+            catch (Exception ex)
+            {
+                Label1.Text = ex.Message;
+            }
         }
     }
 }

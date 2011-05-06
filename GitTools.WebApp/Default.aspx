@@ -22,6 +22,11 @@
             </td>
             <td>
                 <asp:TextBox ID="TextBox1" runat="server" Width="380px"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" 
+                    ControlToValidate="TextBox1" ErrorMessage="Required"></asp:RequiredFieldValidator>
+                <asp:CustomValidator ID="CustomValidator1" runat="server" 
+                    ControlToValidate="TextBox1" ErrorMessage="File dose not exsits" 
+                    onservervalidate="CustomValidator1_ServerValidate"></asp:CustomValidator>
             </td>
         </tr>
         <tr>
@@ -30,6 +35,11 @@
             </td>
             <td>
                 <asp:TextBox ID="TextBox2" runat="server" Width="380px"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" 
+                    ControlToValidate="TextBox2" ErrorMessage="Required"></asp:RequiredFieldValidator>
+                <asp:CustomValidator ID="CustomValidator2" runat="server" 
+                    ControlToValidate="TextBox2" ErrorMessage="Folder dose not exsits" 
+                    onservervalidate="CustomValidator2_ServerValidate"></asp:CustomValidator>
             </td>
         </tr>
 

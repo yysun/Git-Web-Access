@@ -4,6 +4,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <asp:Label ID="Label1" runat="server" ViewStateMode="Disabled"></asp:Label>
     <asp:GridView ID="gwRepos" runat="server" AutoGenerateColumns="false" EnableViewState="false"
         BorderWidth="0" CellSpacing="2" CellPadding="2" GridLines="None" Width="100%">
         <Columns>

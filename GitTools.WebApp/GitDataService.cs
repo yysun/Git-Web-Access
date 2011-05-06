@@ -4,7 +4,7 @@ using System.Data.Services.Common;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Web;
-using GitTools;
+using GitTools.DataServices;
 
 public class GitDataService : DataService<GitDataSource>
 {
