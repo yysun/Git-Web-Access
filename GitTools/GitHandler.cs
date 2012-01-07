@@ -167,6 +167,7 @@ namespace GitTools
         {
             var fout = Path.GetTempFileName();
             context.Response.ContentType = string.Format("application/x-git-{0}-advertisement", serviceName);
+            context.Response.Charset = null;
             context.Response.Write(GitString("# service=git-" + serviceName));
             context.Response.Write("0000");
             Git.RunGitCmd(string.Format("{0} --stateless-rpc --advertise-refs \"{1}\" > \"{2}\"", serviceName, gitWorkingDir, fout));
