@@ -158,9 +158,10 @@ namespace GitTools
 
             Git.RunGitCmd(string.Format("{0} --stateless-rpc \"{1}\" < \"{2}\" > \"{3}\"", serviceName, gitWorkingDir, fin, fout));
             context.Response.WriteFile(fout);
-            context.Response.End();
+            context.Response.Flush();
             File.Delete(fin);
             File.Delete(fout);
+            context.Response.End();
         }
 
         private void GetInfoRefs(string serviceName)
@@ -172,8 +173,9 @@ namespace GitTools
             context.Response.Write("0000");
             Git.RunGitCmd(string.Format("{0} --stateless-rpc --advertise-refs \"{1}\" > \"{2}\"", serviceName, gitWorkingDir, fout));
             context.Response.WriteFile(fout);
-            context.Response.End();
+            context.Response.Flush();
             File.Delete(fout);
+            context.Response.End();
         }
 
         public bool IsReusable
