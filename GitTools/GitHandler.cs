@@ -157,8 +157,7 @@ namespace GitTools
             }
 
             Git.RunGitCmd(string.Format("{0} --stateless-rpc \"{1}\" < \"{2}\" > \"{3}\"", serviceName, gitWorkingDir, fin, fout));
-            context.Response.WriteFile(fout);
-            context.Response.Flush();
+            PutFileInChunks(fout, context.Response);
             File.Delete(fin);
             File.Delete(fout);
             context.Response.End();
@@ -172,10 +171,24 @@ namespace GitTools
             context.Response.Write(GitString("# service=git-" + serviceName));
             context.Response.Write("0000");
             Git.RunGitCmd(string.Format("{0} --stateless-rpc --advertise-refs \"{1}\" > \"{2}\"", serviceName, gitWorkingDir, fout));
-            context.Response.WriteFile(fout);
-            context.Response.Flush();
+            PutFileInChunks(fout, context.Response);
             File.Delete(fout);
             context.Response.End();
+        }
+
+        private void PutFileInChunks(string filename, HttpResponse response)
+        {
+            const int chunkSize = 16384;
+            var buffer = new byte[chunkSize];
+            using (FileStream fs = File.Open(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                int read = 0;
+                while ((read = fs.Read(buffer, 0, chunkSize)) > 0)
+                {
+                    response.OutputStream.Write(buffer, 0, read);
+                    response.Flush();
+                }
+            }
         }
 
         public bool IsReusable
