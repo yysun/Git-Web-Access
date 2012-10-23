@@ -13,7 +13,7 @@ namespace GitTools
         private const string TRACE_CATEGORY = "git";
         public const string GIT_EXTENSION = "git";
 
-        public static string Run(string args, string workingDirectory)
+        public static string Run(string args, string workingDirectory, Encoding enconding = null)
         {
             var gitExePath = ConfigurationManager.AppSettings["GitExePath"];
 
@@ -28,6 +28,9 @@ namespace GitTools
                 UseShellExecute = false,
                 WorkingDirectory = workingDirectory,
             };
+
+			if (enconding != null)
+				pinfo.StandardOutputEncoding = enconding;
 
             using (var process = Process.Start(pinfo))
             {
