@@ -41,6 +41,11 @@ Sample Web Site Screenshots
 
 Change Logs
 -----------
+
+#### V0.5.4
+* Update to VS2012
+* Fix handling of single level references (eg "stash")
+
 #### V0.5.3
 * Build as NuGet Package
 
