@@ -16,8 +16,8 @@ namespace GitTools.WebApp
         {
             RouteTable.Routes.Add(
                 new ServiceRoute(
-                    "odata", 
-                    new WebServiceHostFactory(), 
+                    "odata",
+                    new WebServiceHostFactory(),
                     typeof(GitDataService)));
         }
 
