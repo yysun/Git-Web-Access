@@ -88,7 +88,7 @@ namespace GitTools
                 var output = "";
                 try
                 {
-                    output = Git.Run("log -n 100 --date-order HEAD --pretty=format:%H`%P`%cr`%cn`%ce`%ci`%T`%s --all --boundary", this.RepoFolder);
+                    output = Git.Run("log -n 100 --date-order HEAD --pretty=format:%H`%P`%cr`%cn`%ce`%ci`%T`%s --all --boundary", this.RepoFolder, Encoding.UTF8);
                 }
                 catch
                 {
